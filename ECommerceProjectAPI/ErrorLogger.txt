@@ -1,0 +1,11 @@
+Tue Aug 31 2021 - ReferenceError: db is not defined
+    at D:\GitHub\Full-stack\ECommerceProjectAPI\routes\routing.js:7:9
+    at Layer.handle [as handle_request] (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\layer.js:95:5)
+    at D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:335:12)
+    at next (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:174:3)
+    at router (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:47:12)
