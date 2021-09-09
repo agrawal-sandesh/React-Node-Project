@@ -2,7 +2,7 @@ const express = require('express');
 const routing = express.Router();
 const db = require('../../dbConnection.js');
 
-routing.post("/login", async(req, res, next) => {
+routing.post("/login", async(req, res) => {
     try {
         const { email, password } = req.body;
         if (email && password) {
@@ -26,7 +26,7 @@ routing.post("/login", async(req, res, next) => {
 })
 
 
-routing.get("/categories", async(req, res, next) => {
+routing.get("/categories", async(req, res) => {
     try {
         db.all(`SELECT * FROM category_table`, (err, row) => {
             if (err) {
@@ -43,7 +43,7 @@ routing.get("/categories", async(req, res, next) => {
     }
 })
 
-routing.post("/products", async(req, res, next) => {
+routing.post("/products", async(req, res) => {
     try {
         const { categoryId } = req.body;
         if (categoryId) {
@@ -65,7 +65,7 @@ routing.post("/products", async(req, res, next) => {
     }
 })
 
-routing.post("/productdetails", async(req, res, next) => {
+routing.post("/productdetails", async(req, res) => {
     try {
         const { productId, customerId } = req.body;
         if (productId) {
@@ -96,7 +96,7 @@ routing.post("/productdetails", async(req, res, next) => {
     }
 })
 
-routing.post("/addcart", async(req, res, next) => {
+routing.post("/addcart", async(req, res) => {
     try {
         const { productId, customerId } = req.body;
         if (productId && customerId) {
@@ -119,11 +119,13 @@ routing.post("/addcart", async(req, res, next) => {
     }
 })
 
-routing.post("/mycart", async(req, res, next) => {
+routing.post("/mycart", async(req, res) => {
     try {
         const { customerId } = req.body;
         if (customerId) {
-            db.all(`SELECT pt.*, ct.cart_id, ct.quantity FROM cart_table as ct INNER Join product_table pt on ct.product_id=pt.product_id WHERE ct.customer_id ='${customerId}'`, (err, row) => {
+            db.all(`SELECT pt.*, ct.cart_id, ct.quantity FROM cart_table as ct
+                INNER Join product_table pt on ct.product_id=pt.product_id
+                WHERE ct.customer_id ='${customerId}'`, (err, row) => {
                 if (err) {
                     res.send({ status: 'failed', msg: err.message })
                 }
@@ -141,7 +143,7 @@ routing.post("/mycart", async(req, res, next) => {
     }
 })
 
-routing.post("/removecartitem", async(req, res, next) => {
+routing.post("/removecartitem", async(req, res) => {
     try {
         const { cartId } = req.body;
         if (cartId) {
@@ -163,7 +165,7 @@ routing.post("/removecartitem", async(req, res, next) => {
     }
 })
 
-routing.post("/decrementcartitem", async(req, res, next) => {
+routing.post("/decrementcartitem", async(req, res) => {
     try {
         const { cartId } = req.body;
         if (cartId) {
@@ -185,7 +187,7 @@ routing.post("/decrementcartitem", async(req, res, next) => {
     }
 })
 
-routing.post("/incrementcartitem", async(req, res, next) => {
+routing.post("/incrementcartitem", async(req, res) => {
     try {
         const { cartId } = req.body;
         if (cartId) {
@@ -201,6 +203,54 @@ routing.post("/incrementcartitem", async(req, res, next) => {
             })
         } else {
             res.send({ status: 'failed', msg: 'Could not get cart ID' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
+
+routing.post("/address", async(req, res) => {
+    try {
+        const { customerId } = req.body;
+        if (customerId) {
+            db.all(`SELECT ad.*, ct.name, ct.email , ct.contact FROM address_table ad
+                Inner join customer_table ct on ad.customer_id = ct.customer_id
+                WHERE ad.customer_id =${customerId}`, (err, row) => {
+                if (err) {
+                    res.send({ status: 'failed', msg: err.message })
+                }
+                if (row.length > 0) {
+                    res.send({ status: 'success', res: row })
+                } else {
+                    res.send({ status: 'failed', msg: "No Adress for found for the Customer" })
+                }
+            })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get customer ID' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
+
+routing.post("/addaddress", async(req, res) => {
+    try {
+        const { customerId } = req.body;
+        const { address } = req.body;
+        if (customerId) {
+            db.all(`INSERT INTO address_table (address, customer_id, is_default)
+                    VALUES('${address}', '${customerId}', '1')`, (err, row) => {
+                if (err) {
+                    res.send({ status: 'failed', msg: err.message })
+                }
+                if (row.length > 0) {
+                    res.send({ status: 'success', res: row })
+                } else {
+                    res.send({ status: 'failed', msg: "No Adress for the Customer" })
+                }
+            })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get customer ID' })
         }
     } catch (err) {
         res.send({ status: 'failed', msg: 'Something went wrong' })

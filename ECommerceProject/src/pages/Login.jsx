@@ -54,14 +54,14 @@ const Login =()=>{
             <form 
               style={{ 
                 border: "1px solid gray  ", 
-                padding: "20px", 
+                padding: "30px", 
                 borderRadius: "8px", 
-                marginTop :"30px",
-                boxShadow:"5px 10px gray", 
+                marginTop :"15%",
+                boxShadow:"5px 5px 10px gray", 
                 backgroundColor:"#F5F5F5"
               }}
             >
-              <h2 className="text-center" className="text-success">Login Here</h2>
+              <h2 className="text-success text-center">Login Here</h2>
               <div className="form-group">
                 <label>Username:</label>
                 <input 
@@ -93,11 +93,20 @@ const Login =()=>{
               <button 
                 type="button"
                 className="btn btn-success" 
+                style={{padding:"2% 8%"}}
                 disabled={!(email && password && !errorMessageEmail && !errorMessagePassword)} 
                 onClick={loginSubmit}
               >
                 Login
-              </button><br/>
+              </button>
+              <button 
+                type="button"
+                className="btn btn-primary" 
+                style={{padding:"2% 8%",float:"right"}} 
+              >
+                SignUp
+              </button>
+              <br/>
             </form>
           </div>
         </div>

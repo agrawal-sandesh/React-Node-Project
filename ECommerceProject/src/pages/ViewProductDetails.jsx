@@ -82,7 +82,7 @@ const ViewProductDetails = () =>{
               </div>
             </div>  
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-7'>
             <div className="card">
               <div className='card-header bg-gradient-light'>
                 <h4 className="text-center">{productDetails.name} </h4> 
