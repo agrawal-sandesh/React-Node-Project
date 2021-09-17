@@ -102,7 +102,7 @@ const ViewProducts = () =>{
           Cart
       </div>
       <div className="row" >
-        <div className='col-md-7'>
+        <div className='col-md-7 ml-4 mt-4'>
           { 
             cartProductData.length > 0 ?
               cartProductData.map(cartProduct => 
@@ -119,7 +119,9 @@ const ViewProducts = () =>{
         </div>
         {
           cartProductData.length>0? 
-          <div className='col-md-4'>
+          <div className='col-md-4 mt-4'
+          style={{backgroundColor:'whitesmoke'}}
+          >
             <div><strong>Subtotal: </strong>{subTotal}</div>
             <div><strong>Delivery Charges: </strong>{deliveryCharge}</div>
             <hr />

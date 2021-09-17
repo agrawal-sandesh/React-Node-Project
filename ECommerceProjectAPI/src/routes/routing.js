@@ -215,7 +215,7 @@ routing.post("/address", async(req, res) => {
         if (customerId) {
             db.all(`SELECT ad.*, ct.name, ct.email , ct.contact FROM address_table ad
                 Inner join customer_table ct on ad.customer_id = ct.customer_id
-                WHERE ad.customer_id =${customerId}`, (err, row) => {
+                WHERE ad.customer_id =${customerId} order by address_id desc`, (err, row) => {
                 if (err) {
                     res.send({ status: 'failed', msg: err.message })
                 }
@@ -238,19 +238,68 @@ routing.post("/addaddress", async(req, res) => {
         const { customerId } = req.body;
         const { address } = req.body;
         if (customerId) {
+            db.all(`UPDATE address_table SET is_default=0 WHERE customer_id=${customerId}`)
             db.all(`INSERT INTO address_table (address, customer_id, is_default)
                     VALUES('${address}', '${customerId}', '1')`, (err, row) => {
                 if (err) {
                     res.send({ status: 'failed', msg: err.message })
                 }
-                if (row.length > 0) {
-                    res.send({ status: 'success', res: row })
+                if (!err) {
+                    res.send({ status: 'success', msg: "New Address Inserted successfully" })
                 } else {
-                    res.send({ status: 'failed', msg: "No Adress for the Customer" })
+                    res.send({ status: 'failed', msg: "Can not update the address" })
                 }
             })
         } else {
             res.send({ status: 'failed', msg: 'Could not get customer ID' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
+
+routing.post("/updateDefaultAddress", async(req, res) => {
+    try {
+        const { customerId } = req.body;
+        const { addressId } = req.body;
+        if (customerId) {
+            db.all(`UPDATE address_table SET is_default=0 WHERE customer_id=${customerId}`)
+            db.all(`UPDATE address_table SET is_default=1 WHERE address_id=${addressId}`, (err, row) => {
+                if (err) {
+                    res.send({ status: 'failed', msg: err.message })
+                }
+                if (!err) {
+                    res.send({ status: 'success', msg: "New Address updated successfully" })
+                } else {
+                    res.send({ status: 'failed', msg: "Can not update the address" })
+                }
+            })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get customer ID' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
+
+routing.post("/removeaddress", async(req, res) => {
+    try {
+        const { customerId } = req.body;
+        const { addressId } = req.body;
+        if (addressId) {
+            db.all(`DELETE FROM address_table WHERE address_id='${addressId}' AND customer_id='${customerId}'`,
+                (err, row) => {
+                    if (err) {
+                        res.send({ status: 'failed', msg: err.message })
+                    }
+                    if (!err) {
+                        res.send({ status: 'success', msg: "Removed Address from Table" })
+                    } else {
+                        res.send({ status: 'failed', msg: "Can not Remove Address from the table" })
+                    }
+                })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get addressId' })
         }
     } catch (err) {
         res.send({ status: 'failed', msg: 'Something went wrong' })
