@@ -27,6 +27,10 @@ const Login =()=>{
     setErrorMessagePassword(!(event.target.value.length > 5))
   }
 
+  const handleSignUp=()=>{
+    history.push("/signup")
+  }
+
   const loginSubmit = ()=>{
     axios
     .post('http://localhost:4000/login', {
@@ -102,7 +106,8 @@ const Login =()=>{
               <button 
                 type="button"
                 className="btn btn-primary" 
-                style={{padding:"2% 8%",float:"right"}} 
+                style={{padding:"2% 8%",float:"right"}}
+                onClick={handleSignUp} 
               >
                 SignUp
               </button>

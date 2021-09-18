@@ -5,7 +5,8 @@ import ViewCategories from './pages/ViewCategories';
 import ViewProducts from './pages/ViewProducts';
 import ViewProductDetails from './pages/ViewProductDetails';
 import ViewCart from './pages/ViewCart';
-import ViewCheckout from './pages/ViewCheckout'
+import ViewCheckout from './pages/ViewCheckout';
+import SignUp from './pages/SignUp';
 import { useHistory } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import './index.css';
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/mycart" component={ViewCart}/>
             <Route path="/checkout" component={ViewCheckout}/>
             <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
           </Switch>
         </div>
       </React.Fragment>

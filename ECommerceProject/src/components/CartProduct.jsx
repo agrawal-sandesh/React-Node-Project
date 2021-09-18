@@ -10,7 +10,7 @@ return (
       <span style={{ position: "relative", left: "5%", bottom:"25px"}}>
         <strong>{props.cartProduct.name}</strong>
       </span>
-      <span style={{ position: "relative", left: "55%",bottom:"25px"}}>
+      <span style={{ position: "relative", float:"right"}}>
         <strong>Rate: </strong> {props.cartProduct.rate}
       </span>
       <span style={{ position: "relative", left: "15%", bottom:"25px"}}> 
