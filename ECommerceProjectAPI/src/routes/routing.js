@@ -313,39 +313,49 @@ routing.post("/signup", async(req, res) => {
         let { contact } = req.body;
         let { password } = req.body;
         let { address } = req.body;
-        if (name && email && contact && password) {
-            db.all(`INSERT INTO customer_table (name, email, contact, password)
-                VALUES('${name}', '${email}', '${contact}', '${password}')`, (err, row) => {
+        if (name && email && contact && password && address) {
+            db.all(`SELECT email FROM customer_table WHERE email='${email}'`, (err, row) => {
                 if (err) {
                     res.send({ status: 'failed', msg: err.message })
                 }
-                if (!err) {
-                    db.all(`SELECT customer_id FROM customer_table WHERE email='${email}'`, (err, row) => {
+                if (row.length > 0) {
+                    res.send({ status: 'failed', msg: "User already registered" })
+                } else {
+                    db.all(`INSERT INTO customer_table (name, email, contact, password)
+                    VALUES('${name}', '${email}', '${contact}', '${password}')`, (err, row) => {
                         if (err) {
                             res.send({ status: 'failed', msg: err.message })
                         }
-                        if (row) {
-                            const customerId = row[0].customer_id
-                            if (customerId) {
-                                db.all(`INSERT INTO address_table (address, customer_id,is_default)
-                                    VALUES('${address}', '${customerId}',1)`, (err, row) => {
-                                    if (err) {
-                                        res.send({ status: 'failed', msg: err.message })
-                                    }
-                                    if (!err) {
-                                        res.send({ status: 'success', msg: "Customer Details Added Successfully!" })
+                        if (!err) {
+                            db.all(`SELECT customer_id FROM customer_table WHERE email='${email}'`, (err, row) => {
+                                if (err) {
+                                    res.send({ status: 'failed', msg: err.message })
+                                }
+                                if (row) {
+                                    const customerId = row[0].customer_id
+                                    if (customerId) {
+                                        db.all(`INSERT INTO address_table (address, customer_id,is_default)
+                                        VALUES('${address}', '${customerId}',1)`, (err, row) => {
+                                            if (err) {
+                                                res.send({ status: 'failed', msg: err.message })
+                                            }
+                                            if (!err) {
+                                                res.send({ status: 'success', msg: "Customer Details Added Successfully!" })
+                                            } else {
+                                                res.send({ status: 'failed', msg: "Can not Insert the address" })
+                                            }
+                                        })
                                     } else {
-                                        res.send({ status: 'failed', msg: "Can not Insert the address" })
+                                        res.send({ status: 'failed', msg: 'Could not get customer Id' })
                                     }
-                                })
-                            } else {
-                                res.send({ status: 'failed', msg: 'Could not get customer Id' })
-                            }
+                                }
+                            })
+                        } else {
+                            res.send({ status: 'failed', msg: "Can't find customer_id" })
                         }
                     })
-                } else {
-                    res.send({ status: 'failed', msg: "Something went wrong" })
                 }
+
             })
 
         } else {

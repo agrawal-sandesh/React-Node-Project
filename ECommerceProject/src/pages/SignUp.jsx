@@ -17,6 +17,7 @@ const SignUp =()=>{
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
   const [errorMessageAddress, setErrorMessageAddress] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
+  const [userAlreadyRegistered,setUserAlreadyRegistered] = useState(false);
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
 
 
@@ -67,7 +68,12 @@ const SignUp =()=>{
         setPassword('');
         setAddress('');
         setSuccessMessage(true)
-      }else{
+      }
+      else if(response.data.status === 'failed' &&
+      response.data.msg==='User already registered'){
+        setUserAlreadyRegistered(true)
+      }
+      else{
         alert('SignUp Failed')
       }
     })
@@ -177,6 +183,12 @@ const SignUp =()=>{
               {
                 successMessage ?  
                 <><span className="text-success">Sign Up Successful!!
+                <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>:
+                null
+              }
+              {
+                userAlreadyRegistered ?  
+                <><span className="text-danger">User Already Registered
                 <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>:
                 null
               }

@@ -202,7 +202,7 @@ const handleRemoveAddress=(addressId)=>{
               </div>:
               null
           }
-        </div>
+        </div>    
       </div>
     </React.Fragment>
   )

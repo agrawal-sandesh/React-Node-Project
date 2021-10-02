@@ -10,9 +10,11 @@ return (
       <span style={{ position: "relative", left: "5%", bottom:"25px"}}>
         <strong>{props.cartProduct.name}</strong>
       </span>
+
       <span style={{ position: "relative", float:"right"}}>
         <strong>Rate: </strong> {props.cartProduct.rate}
       </span>
+
       <span style={{ position: "relative", left: "15%", bottom:"25px"}}> 
         <button 
           onClick={()=> props.handleDecrementItem(props.cartProduct.cart_id)}
@@ -23,14 +25,17 @@ return (
         </span>
         <button onClick={()=> props.handleIncrementItem(props.cartProduct.cart_id)}>+</button> 
       </span>
+
+      <span style={{ position: "relative", left: "25%",bottom:"30px"}}>
+        <strong>Amount: </strong> {parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
+      </span>
+
       <span style={{ position: "relative", left:"5%", top:"25px"}}
         onClick={()=> props.handleRemoveItem(props.cartProduct.cart_id)}>
         <u style={{color:"red"}}>Remove item</u>
       </span>
-      <span style={{ position: "relative", left: "20%", top:"25px"}}>
-        <strong>Amount: </strong> {parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
-      </span>
-  </div>
+      
+    </div>
   </div>
 </div>
 )

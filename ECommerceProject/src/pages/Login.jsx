@@ -42,7 +42,7 @@ const Login =()=>{
         setCookie('Token', response.data.res)
         history.push("/");
       }else{
-        alert('Failed')
+        alert('User not registered')
       }
     })
     .catch(function (error) {
@@ -96,20 +96,20 @@ const Login =()=>{
               }
               <button 
                 type="button"
-                className="btn btn-success" 
+                className="btn btn-primary" 
                 style={{padding:"2% 8%"}}
+                onClick={handleSignUp} 
+              >
+                SignUp
+              </button>
+              <button 
+                type="button"
+                className="btn btn-success" 
+                style={{padding:"2% 8%",float:"right"}}
                 disabled={!(email && password && !errorMessageEmail && !errorMessagePassword)} 
                 onClick={loginSubmit}
               >
                 Login
-              </button>
-              <button 
-                type="button"
-                className="btn btn-primary" 
-                style={{padding:"2% 8%",float:"right"}}
-                onClick={handleSignUp} 
-              >
-                SignUp
               </button>
               <br/>
             </form>
