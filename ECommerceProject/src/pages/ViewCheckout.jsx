@@ -64,8 +64,62 @@ const ViewCheckout = () =>{
     });
   }
 
-  const handleProceedToPayment = ()=>{
-    history.push('/payment')
+  const loadScript = (src)  => {
+    return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => {resolve(true)};
+        script.onerror = () => {resolve(false)};
+        document.body.appendChild(script);
+    });
+  }
+
+  async function handleProceedToPayment() {
+    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    const result = await axios.post("http://localhost:4000/orders",{
+      amount: total
+    });
+
+    if (!result) {
+        alert("Server error. Are you online?");
+        return;
+    }
+    const { amount, id: order_id, currency } = result.data;
+    const options = {
+        key: "rzp_test_rZ6Kw7FRxiZRsU",
+        amount: amount.toString(),
+        currency: currency,
+        name: "PMart",
+        description: "Billing Amount",
+        order_id: order_id,
+        handler: async function (response) {
+          console.log(`response -> ${JSON.stringify(response)}`)
+          const data = {
+              orderCreationId: order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpaySignature: response.razorpay_signature,
+          };
+          const result = await axios.post("http://localhost:4000/success", data);
+          alert(result.data.msg);
+          // TODO: Redirect to the succes UI page after successfully order
+        },
+        prefill: {
+            name: "Soumya Dey",
+            email: "SoumyaDey@example.com",
+            contact: "9999999999",
+        },
+        notes: {
+          address: "",
+        }
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   }
 
   const handleNewAddressButton=(buttonState)=>{

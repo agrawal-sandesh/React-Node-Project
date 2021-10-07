@@ -1,6 +1,8 @@
 const express = require('express');
 const routing = express.Router();
 const db = require('../../dbConnection.js');
+const Razorpay = require("razorpay");
+const crypto = require('crypto');
 
 routing.post("/login", async(req, res) => {
     try {
@@ -365,5 +367,54 @@ routing.post("/signup", async(req, res) => {
         res.send({ status: 'failed', msg: 'Something went wrong' })
     }
 })
+
+routing.post("/orders", middleware, async(req, res) => {
+    try {
+        const instance = new Razorpay({
+            key_id: 'rzp_test_rZ6Kw7FRxiZRsU',
+            key_secret: 'KUoEbctKHoLQDoAeOlnbBH7v',
+        });
+        const options = {
+            amount: parseInt(req.body.amount) * 100,
+            currency: "INR",
+            receipt: "order_" + Math.floor((Math.random() * 10000000000000) + 1),
+        };
+        const order = await instance.orders.create(options);
+        if (!order) return res.status(500).send("Some error occured");
+        res.json(order);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+routing.post("/success", async(req, res) => {
+    try {
+        const {
+            orderCreationId,
+            razorpayPaymentId,
+            razorpayOrderId,
+            razorpaySignature,
+        } = req.body;
+
+        const shasum = crypto.createHmac("sha256", "KUoEbctKHoLQDoAeOlnbBH7v");
+        shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
+        const digest = shasum.digest("hex");
+
+        // comaparing our digest with the actual signature
+        if (digest !== razorpaySignature)
+            return res.status(400).json({ msg: "Transaction not legit!" });
+
+        // THE PAYMENT IS LEGIT & VERIFIED
+        // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
+
+        res.json({
+            msg: "success",
+            orderId: razorpayOrderId,
+            paymentId: razorpayPaymentId,
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 module.exports = routing;
