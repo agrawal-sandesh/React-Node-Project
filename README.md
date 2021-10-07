@@ -3,3 +3,4 @@ This is a project build using Full Stack of javascript. I am working on it at pr
 I used ReactJS for the frontend.
 Node & Express for the backend APIs.
 SQL as the Database.
+Also integrated Razorpay as the payment Gateway
