@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Category from '../components/Category';
+import Header from './Header';
 
 const ViewCategories = () =>{
   const history = useHistory();
@@ -29,7 +30,9 @@ const ViewCategories = () =>{
   }
 
   return (
-  <React.Fragment className="container">
+  <React.Fragment>
+    <Header/>
+    <div class="container-fluid">
       <div className="display-4">
         Categories
       </div>
@@ -45,8 +48,9 @@ const ViewCategories = () =>{
           ):
           null
         }
-        {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
+        {errorMessage ? <h2>{errorMessage}</h2>: null}
       </div>
+    </div>
   </React.Fragment>
   )
 }

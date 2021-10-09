@@ -316,7 +316,8 @@ routing.post("/signup", async(req, res) => {
         let { password } = req.body;
         let { address } = req.body;
         if (name && email && contact && password && address) {
-            db.all(`SELECT email FROM customer_table WHERE email='${email}'`, (err, row) => {
+            db.all(`SELECT email, contact FROM customer_table WHERE email='${email}' 
+            OR contact='${contact}' `, (err, row) => {
                 if (err) {
                     res.send({ status: 'failed', msg: err.message })
                 }
@@ -368,18 +369,17 @@ routing.post("/signup", async(req, res) => {
     }
 })
 
-routing.post("/orders", middleware, async(req, res) => {
+routing.post("/orders", async(req, res) => {
     try {
-        const instance = new Razorpay({
-            key_id: 'rzp_test_rZ6Kw7FRxiZRsU',
-            key_secret: 'KUoEbctKHoLQDoAeOlnbBH7v',
-        });
         const options = {
             amount: parseInt(req.body.amount) * 100,
             currency: "INR",
             receipt: "order_" + Math.floor((Math.random() * 10000000000000) + 1),
         };
-        const order = await instance.orders.create(options);
+        const order = await new Razorpay({
+            key_id: 'rzp_test_rZ6Kw7FRxiZRsU',
+            key_secret: 'KUoEbctKHoLQDoAeOlnbBH7v',
+        }).orders.create(options);
         if (!order) return res.status(500).send("Some error occured");
         res.json(order);
     } catch (error) {

@@ -3,7 +3,7 @@ import '../index.css';
 
 const Product = (props) => {
   return (  
-    <div className='col-md-3' style={{marginLeft:"6%"}}>
+    <div className='col-md-3 mt-4' style={{marginLeft:"6%"}}>
       <div className="card">
         <div className='card-header bg-gradient-light'
           onClick={()=> props.handleMoveToNext(props.product.product_id)}> 
@@ -17,7 +17,7 @@ const Product = (props) => {
               {props.product.name}
             </h5> 
             <span onClick={()=> props.handleMoveToNext(props.product.product_id)}>
-            <strong>Rate: </strong> {props.product.rate}</span>
+            <strong>Rate: </strong> ₹{props.product.rate}</span>
             <br/>
           </div>
         </div>

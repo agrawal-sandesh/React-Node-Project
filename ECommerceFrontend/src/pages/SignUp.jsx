@@ -86,25 +86,24 @@ const SignUp =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-5 offset-3">        
+          <div className="col-md-6 offset-3">        
             <form 
               style={{ 
                 border: "1px solid gray  ", 
-                padding: "50px", 
-                borderRadius: "8px", 
+                padding: "5%", 
                 boxShadow:"5px 5px 10px gray", 
                 marginTop:"5%",
-                backgroundColor:"#F5F5F5"
+                backgroundColor:"white"
               }}
             >
-              <h2 className="text-black text-center mb-4">SignUp Form</h2>
+              <h3 className="text-black text-center mb-4">Looks, Like you are new Here!!</h3>
               <div className="form-group">
                 <input 
                   className="form-control"
                   placeholder="Full Name"
-                  style={{backgroundColor:"#F5FFFA"}} 
                   onChange={validateName} 
-                  value={name} 
+                  value={name}
+                  id="input1"
                 />
               </div>
               {
@@ -116,9 +115,9 @@ const SignUp =()=>{
                 <input 
                   className="form-control" 
                   placeholder="Email Address"
-                  style={{backgroundColor:"#F5FFFA"}} 
                   onChange={validateEmail} 
-                  value={email} 
+                  value={email}
+                  id="input1"  
                 />
               </div>
               {
@@ -126,41 +125,44 @@ const SignUp =()=>{
                 <><span className="text-danger">Enter Valide Email</span><br/></>:
                 null
               }
-              <div className="form-group">
-                  <input 
-                    className="form-control" 
-                    placeholder="Contact Number"
-                    style={{backgroundColor:"#F5FFFA"}} 
-                    onChange={validateContact} 
-                    value={contact} 
-                  />
+              <div className="form-row">
+                  <div className="form-group col-md-6">
+                      <input 
+                        className="form-control" 
+                        placeholder="Contact Number"
+                        onChange={validateContact} 
+                        value={contact}
+                        id="input1"  
+                      />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <input 
+                      className="form-control" 
+                      placeholder="Create Password"
+                      onChange={validatePassword} 
+                      value={password} 
+                      id="input1" 
+                    />
+                  </div>
               </div>
               {
                 errorMessageContact ? 
-                <><span className="text-danger">Enter Valide Contact No</span><br/></>:
+                <><span className="text-danger" style={{float:'left'}}>Enter Valide Contact No</span></>:
                 null
               }
-              <div className="form-group">
-                  <input 
-                    className="form-control" 
-                    placeholder="Create Password"
-                    style={{backgroundColor:"#F5FFFA"}} 
-                    onChange={validatePassword} 
-                    value={password} 
-                  />
-              </div>
+
               {
                 errorMessagePassword ? 
-                <><span className="text-danger">Enter Valide Password</span><br/></>:
+                <><span className="text-danger" style={{float:'right'}}>Enter Valide Password</span><br/></>:
                 null
               }
               <div className="form-group">
                 <textarea 
                   className="form-control" 
                   placeholder="Enter Address Details"
-                  style={{backgroundColor:"#F5FFFA"}} 
                   onChange={validateAddress} 
                   value={address}
+                  id="input1" 
                 />
               </div>
               {
@@ -168,9 +170,25 @@ const SignUp =()=>{
                 <><span className="text-danger">Enter Valid Address</span><br/></>:
                 null
               }
+              {
+                successMessage ?  
+                <div className="text-center">
+                <><span className="text-success">Sign Up Successful!!
+                <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>
+                </div>
+                :null
+              }
+              {
+                userAlreadyRegistered ?
+                <div className="text-center">
+                <><span className="text-danger">Email or Contact already Registered
+                </span><br/></>
+                </div>
+                :null
+              }
               <button 
                 type="button"
-                className="btn btn-primary" 
+                className="btn btn-block btn-primary" 
                 style={{padding:"2% 8%", float:"right"}}
                 disabled={!(email && password && name && contact && address &&
                 !errorMessageEmail && !errorMessagePassword && !errorMessageName 
@@ -178,20 +196,17 @@ const SignUp =()=>{
                 )} 
                 onClick={signUpSubmit}
               >
-                SignUp
+                Signup
               </button>
-              {
-                successMessage ?  
-                <><span className="text-success">Sign Up Successful!!
-                <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>:
-                null
-              }
-              {
-                userAlreadyRegistered ?  
-                <><span className="text-danger">User Already Registered
-                <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>:
-                null
-              }
+              <div className="text-center">
+              <button 
+                type="button"
+                className="btn btn-link"
+                onClick={handleLogin}
+              >
+                Existing User? Log in 
+              </button>
+              </div>
             </form>
           </div>
         </div>

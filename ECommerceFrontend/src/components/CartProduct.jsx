@@ -12,7 +12,7 @@ return (
       </span>
 
       <span style={{ position: "relative", float:"right"}}>
-        <strong>Rate: </strong> {props.cartProduct.rate}
+        <strong>Rate: </strong> ₹{props.cartProduct.rate}
       </span>
 
       <span style={{ position: "relative", left: "15%", bottom:"25px"}}> 
@@ -27,7 +27,7 @@ return (
       </span>
 
       <span style={{ position: "relative", left: "25%",bottom:"30px"}}>
-        <strong>Amount: </strong> {parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
+        <strong>Amount: </strong> ₹{parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
       </span>
 
       <span style={{ position: "relative", left:"5%", top:"25px"}}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Product from '../components/Product';
+import Header from './Header';
 
 const ViewProducts = () =>{
   const history = useHistory();
@@ -33,23 +34,26 @@ const ViewProducts = () =>{
 
   return (
   <React.Fragment className="container">
-    <div className="display-4">
-        Products
-    </div>
-      <div className="row">
-        { 
-          productData?
-          productData.map(product => 
-            <Product 
-              key={product.product_id} 
-              product={product} 
-              handleMoveToNext={handleMoveToNext}
-            />
-          ):
-          null
-        }
-        {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
+    <Header/>
+    <div className="container-fluid">
+      <div className="display-4">
+          Products
       </div>
+        <div className="row">
+          { 
+            productData?
+            productData.map(product => 
+              <Product 
+                key={product.product_id} 
+                product={product} 
+                handleMoveToNext={handleMoveToNext}
+              />
+            ):
+            null
+          }
+          {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
+        </div>
+      </div> 
   </React.Fragment>
   )
 }

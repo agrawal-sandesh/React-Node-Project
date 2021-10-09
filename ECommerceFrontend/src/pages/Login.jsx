@@ -57,61 +57,64 @@ const Login =()=>{
           <div className="col-md-4 offset-4">        
             <form 
               style={{ 
-                border: "1px solid gray  ", 
-                padding: "30px", 
-                borderRadius: "8px", 
+                border: "1px solid gray", 
+                padding: "10%", 
                 marginTop :"15%",
                 boxShadow:"5px 5px 10px gray", 
-                backgroundColor:"#F5F5F5"
+                backgroundColor:"white"
               }}
             >
-              <h2 className="text-success text-center">Login Here</h2>
+              <h2 className="text-center">Login!</h2>
               <div className="form-group">
-                <label>Username:</label>
                 <input 
                   className="form-control" 
-                  style={{backgroundColor:"#F5FFFA"}} 
                   onChange={validateEmail} 
-                  value={email} 
+                  value={email}
+                  placeholder="Email Address"
+                  id="input1" 
                 />
               </div>
+              <div>
               {
                 errorMessageEmail ? 
-                <><span className="text-danger">Incorrect Username</span><br/></>:
+                <><span className="text-danger">Enter Your Email address</span></>:
                 null
               }
+              </div>
               <div className="form-group">
-                <label>Password:</label>
                 <input 
                   className="form-control" 
-                  style={{backgroundColor:"#F5FFFA"}} 
                   onChange={validatePassword} 
                   value={password}
+                  placeholder="Password"
+                  id="input1"
                 />
-              </div><br/>
+              </div>
+              <div>
               {
                 errorMessagePassword ? 
-                <><span className="text-danger">Please Enter the Correct Password</span><br/></>:
+                <><span className="text-danger">Enter Valid Password</span></>:
                 null
               }
+              </div>
               <button 
                 type="button"
-                className="btn btn-primary" 
+                className="btn btn-block btn-success" 
                 style={{padding:"2% 8%"}}
-                onClick={handleSignUp} 
-              >
-                SignUp
-              </button>
-              <button 
-                type="button"
-                className="btn btn-success" 
-                style={{padding:"2% 8%",float:"right"}}
                 disabled={!(email && password && !errorMessageEmail && !errorMessagePassword)} 
                 onClick={loginSubmit}
               >
                 Login
               </button>
-              <br/>
+              <div className="text-center">
+              <button 
+                type="button"
+                className="btn btn-link"
+                onClick={handleSignUp}
+              >
+                Create a new account ?
+              </button>
+              </div>
             </form>
           </div>
         </div>

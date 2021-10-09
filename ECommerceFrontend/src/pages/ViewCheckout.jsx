@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory} from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Address from '../components/Address';
+import Header from './Header';
 
 const ViewCheckout = () =>{
   const history = useHistory();
@@ -53,8 +54,10 @@ const ViewCheckout = () =>{
       customerId:cookies.Token.customer_id
     })
     .then(response => {
-      if(response.data.status === 'success')
+      if(response.data.status === 'success'){
+        console.log(response.data);
         setAddressData(response.data.res);
+      }
       else
         setAddressData([]);
       setErrorMessage(response.data.msg);
@@ -88,36 +91,37 @@ const ViewCheckout = () =>{
         alert("Server error. Are you online?");
         return;
     }
-    const { amount, id: order_id, currency } = result.data;
+    const { amount, id: receipt, currency } = result.data;
+
     const options = {
         key: "rzp_test_rZ6Kw7FRxiZRsU",
         amount: amount.toString(),
         currency: currency,
         name: "PMart",
         description: "Billing Amount",
-        order_id: order_id,
+        order_id: receipt,
         handler: async function (response) {
-          console.log(`response -> ${JSON.stringify(response)}`)
           const data = {
-              orderCreationId: order_id,
+              orderCreationId: receipt,
               razorpayPaymentId: response.razorpay_payment_id,
               razorpayOrderId: response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
           };
-          const result = await axios.post("http://localhost:4000/success", data);
+          const result = await axios.post("http://localhost:4000/success",data);
           alert(result.data.msg);
           // TODO: Redirect to the succes UI page after successfully order
+          history.push('/successpage')
         },
         prefill: {
-            name: "Soumya Dey",
-            email: "SoumyaDey@example.com",
-            contact: "9999999999",
+            email: addressData[0].email,
+            contact: addressData[0].contact,
         },
         notes: {
-          address: "",
+          name: addressData[0].name,
+          address: addressData[0].address,
         }
     };
-
+    console.log(options)
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
@@ -186,79 +190,96 @@ const handleRemoveAddress=(addressId)=>{
 
   return (
     <React.Fragment>
-      <div className="display-4 container" style={{marginLeft:"2%"}}>
-          Checkout Page
-      </div>
-      <div className="row" >
-        <div className='col-md-7 ml-3'>
-          <div className='card-header' className=''>
-          <h5 style={{color:"white"}}> DELIVERY ADDRESS</h5>
-          </div>
-          { 
-            addressData.length > 0 ?
-              addressData.map(addressData => 
-                  <Address 
-                    key={addressData.address_id} 
-                    addressData={addressData}
-                    handleProceedToPayment={handleProceedToPayment}
-                    clickedAddress={clickedAddress}
-                    handleRemoveAddress={handleRemoveAddress}
-                  />
-                ):
-                null
-          }
-          <div>
-            {
-              !isAddAddressVisible?
-                <button className="btn btn-block btn-primary mb-3" 
-                onClick={()=> handleNewAddressButton('open')}>
-                  ADD A NEW
-                </button>
-                :
-                <div>
-                  <div className="form-group">
-                    <textarea 
-                      className="form-control" 
-                      rows="4" 
-                      value={address}
-                      placeholder="Enter Address Here" 
-                      onChange={e => setAddress(e.target.value)}>{address}</textarea>
-                  </div>
-                  <button className="btn float-right btn-success mb-3" 
-                  onClick={addAddress}>
-                      Add
-                  </button>
-                  <button className="btn float-right btn-danger mr-2" 
-                  onClick={()=> handleNewAddressButton('close')}>
-                      Cancel
-                  </button>
-                </div>
+      <Header/>
+      <div className="container-fluid">
+        <div className="display-4" style={{marginLeft:"2%"}}>
+            Checkout Page
+        </div>
+        <div className="row" >
+          <div className='col-md-7 ml-4 mt-4'>
+            <div className='card-header' style={{backgroundColor:"#0275d8"}}>
+            <h5 style={{color:"white"}}> DELIVERY ADDRESS</h5>
+            </div>
+            { 
+              addressData.length > 0 ?
+                addressData.map(addressData => 
+                    <Address 
+                      key={addressData.address_id} 
+                      addressData={addressData}
+                      handleProceedToPayment={handleProceedToPayment}
+                      clickedAddress={clickedAddress}
+                      handleRemoveAddress={handleRemoveAddress}
+                    />
+                  ):
+                  null
             }
+            <div>
+              {
+                !isAddAddressVisible?
+                  <button className="btn btn-block btn-primary" 
+                  onClick={()=> handleNewAddressButton('open')}>
+                    ADD A NEW
+                  </button>
+                  :
+                  <div>
+                    <div className="form-group">
+                      <textarea 
+                        className="form-control" 
+                        rows="4" 
+                        value={address}
+                        id="addressBox"
+                        placeholder="Enter Address Here" 
+                        onChange={e => setAddress(e.target.value)}>{address}</textarea>
+                    </div>
+                    <button className="btn float-right btn-success mb-3" 
+                    onClick={addAddress}>
+                        Add
+                    </button>
+                    <button className="btn float-right btn-danger mr-2" 
+                    onClick={()=> handleNewAddressButton('close')}>
+                        Cancel
+                    </button>
+                  </div>
+              }
+            </div>
+          </div>
+            {
+              checkoutProductData.length>0?
+              <div className='col-md-4 ml-4 mt-4'
+                style={{
+                backgroundColor: "white",
+                boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)",
+                padding:"3%",
+                paddingBottom:"5%",
+                height:"100%"
+                }}>
+              <div class='invoice-font'>
+                <div style={{fontWeight:"bold",color:"grey"}}>
+                  PRICE DETAILS
+                </div>
+                <hr/>
+                <div>
+                  Subtotal <span style={{float:"right"}}>₹{subTotal}</span>
+                </div><br/>
+                <div>
+                  Delivery Charges <span style={{float:"right"}}>₹{deliveryCharge}</span>
+                </div>
+                <hr />
+                <div>
+                  <b>Total Payable <span style={{float:"right"}}>₹{total}</span></b>
+                </div>
+                <hr />
+                <button className="btn btn-warning btn-block"  style={{
+                  padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
+                onClick={handleProceedToPayment}>Proceed to Make Payment</button> 
+                </div>
+              </div>
+              :null
+          }    
           </div>
         </div>
-        <div className='col-md-4 ml-3 mt-3'
-        style={{backgroundColor:'whitesmoke'}}
-        >
-          {
-            checkoutProductData.length>0?
-              <div>    
-                <div><strong>Subtotal: </strong>{subTotal}</div>
-                <div><strong>Delivery Charges: </strong>{deliveryCharge}</div>
-                <hr />
-                <div><strong>Total: </strong>{total}</div>
-                <hr />
-                <button 
-                  className="btn btn-warning"  
-                  style={{marginLeft:"25%", padding:"1% 10%", borderRadius:"20px"}}
-                  onClick={handleProceedToPayment}>
-                    Proceed to Pay
-                </button> 
-              </div>:
-              null
-          }
-        </div>    
-      </div>
     </React.Fragment>
+ 
   )
 }
 
