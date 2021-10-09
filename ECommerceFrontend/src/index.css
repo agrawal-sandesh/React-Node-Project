@@ -27,8 +27,8 @@
     }
     
     .image-box {
-        height: 150px;
-        width: 150px
+        height: 100%;
+        width: 100%
     }
     
     #input1 {
@@ -50,6 +50,8 @@
         box-shadow: 0 0 5px rgb(56, 60, 61);
     }
     
-    .invoice-font {
-        font-size: large;
+    .font {
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(34, 33, 33);
+        font-weight: bold;
     }

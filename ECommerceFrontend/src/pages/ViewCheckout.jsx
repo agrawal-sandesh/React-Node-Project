@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useHistory} from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Address from '../components/Address';
-import Header from './Header';
+import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const ViewCheckout = () =>{
   const history = useHistory();
@@ -192,13 +193,16 @@ const handleRemoveAddress=(addressId)=>{
     <React.Fragment>
       <Header/>
       <div className="container-fluid">
-        <div className="display-4" style={{marginLeft:"2%"}}>
+        <div className="display-4 ml-4">
             Checkout Page
         </div>
         <div className="row" >
           <div className='col-md-7 ml-4 mt-4'>
-            <div className='card-header' style={{backgroundColor:"#0275d8"}}>
-            <h5 style={{color:"white"}}> DELIVERY ADDRESS</h5>
+            <div className='card-header' style={{backgroundColor:"#0275d8",
+             boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)"}}>
+            <h5 style={{color:"white"}}>
+               DELIVERY ADDRESS
+            </h5>
             </div>
             { 
               addressData.length > 0 ?
@@ -245,7 +249,7 @@ const handleRemoveAddress=(addressId)=>{
           </div>
             {
               checkoutProductData.length>0?
-              <div className='col-md-4 ml-4 mt-4'
+              <div className='col-md-4 ml-2 mt-4'
                 style={{
                 backgroundColor: "white",
                 boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)",
@@ -253,33 +257,32 @@ const handleRemoveAddress=(addressId)=>{
                 paddingBottom:"5%",
                 height:"100%"
                 }}>
-              <div class='invoice-font'>
-                <div style={{fontWeight:"bold",color:"grey"}}>
-                  PRICE DETAILS
-                </div>
-                <hr/>
-                <div>
-                  Subtotal <span style={{float:"right"}}>₹{subTotal}</span>
-                </div><br/>
-                <div>
-                  Delivery Charges <span style={{float:"right"}}>₹{deliveryCharge}</span>
-                </div>
-                <hr />
-                <div>
-                  <b>Total Payable <span style={{float:"right"}}>₹{total}</span></b>
-                </div>
-                <hr />
-                <button className="btn btn-warning btn-block"  style={{
-                  padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
+              
+              <div style={{fontWeight:"bold",color:"grey"}}>
+                PRICE DETAILS
+              </div>
+              <hr/>
+              <div>
+                Subtotal <span style={{float:"right"}}>₹{subTotal}</span>
+              </div><br/>
+              <div>
+                Delivery Charges <span style={{float:"right"}}>₹{deliveryCharge}</span>
+              </div>
+              <hr />
+              <div>
+                <b>Total Payable <span style={{float:"right"}}>₹{total}</span></b>
+              </div>
+              <hr />
+              <button className="btn btn-warning btn-block"  style={{
+                padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
                 onClick={handleProceedToPayment}>Proceed to Make Payment</button> 
-                </div>
               </div>
               :null
           }    
           </div>
         </div>
+      {/* <Footer/>   */}
     </React.Fragment>
- 
   )
 }
 

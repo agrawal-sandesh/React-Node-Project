@@ -54,7 +54,7 @@ const Login =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-4 offset-4">        
+          <div className="col-md-4 offset-4 mt-4">        
             <form 
               style={{ 
                 border: "1px solid gray", 

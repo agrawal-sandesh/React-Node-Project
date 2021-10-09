@@ -14,18 +14,22 @@ return (
         >
         <div className="card-text">
             <input type="radio" checked={props.addressData.is_default == 1}/>
-            <p>
-                <strong>
-                    {props.addressData.name} {props.addressData.contact}    
-                </strong>
-                <button className="btn btn-link" style={{float:"right"}} 
-                    onClick={()=>props.handleRemoveAddress(props.addressData.address_id)}>
-                            REMOVE ADDRESS
-                </button>
-            </p>
-            <span>
-            {props.addressData.address}
-            </span>
+                    <span className="ml-3"><strong>
+                        {props.addressData.name}
+                    </strong></span>
+                    <span className="ml-3"><mark>
+                        Home
+                    </mark></span> 
+                    <span className="ml-3"><strong>
+                        {props.addressData.contact}
+                    </strong></span>  
+                    <button className="btn btn-link" style={{float:"right"}} 
+                        onClick={()=>props.handleRemoveAddress(props.addressData.address_id)}>
+                                REMOVE ADDRESS
+                    </button><br/><br/>
+                    <div className="ml-4">
+                        {props.addressData.address}
+                    </div>
         </div>
         </div>
     </div>

@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useHistory} from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import CartProduct from '../components/CartProduct';
-import Header from './Header';
+import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const ViewProducts = () =>{
   const history = useHistory();
@@ -101,7 +102,7 @@ const ViewProducts = () =>{
   <React.Fragment>
     <Header/>
       <div className="container-fluid">
-        <div className="display-4" style={{marginLeft:"2%"}}>
+        <div className="display-4 ml-4">
             Cart
         </div>
         <div className="row" >
@@ -122,7 +123,7 @@ const ViewProducts = () =>{
           </div>
           {
             cartProductData.length>0? 
-            <div className='col-md-4 mt-4' 
+            <div className='col-md-4 ml-2 mt-4' 
               style={{
               backgroundColor: "white",
               boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)",
@@ -131,32 +132,31 @@ const ViewProducts = () =>{
               height:"100%"
             }}
             >
-            <div class='invoice-font'>
-              <div style={{fontWeight:"bold",color:"grey"}}>
-                PRICE DETAILS
-              </div>
-              <hr/>
-              <div>
-                Subtotal <span style={{float:"right"}}> ₹{subTotal}</span>
-              </div><br/>
-              <div>
-                Delivery Charges <span style={{float:"right"}}>₹{deliveryCharge}</span>
-              </div>
-              <hr/>
-              <div>
-                <b>Total Payable <span style={{float:"right"}}>₹{total}</span></b>
-              </div>
-              <hr/>
-              <button className="btn btn-warning btn-block"  style={{
-                padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
+            <div style={{fontWeight:"bold",color:"grey"}}>
+              PRICE DETAILS
+            </div>
+            <hr/>
+            <div>
+              Subtotal <span style={{float:"right"}}> ₹{subTotal}</span>
+            </div><br/>
+            <div>
+              Delivery Charges <span style={{float:"right"}}>₹{deliveryCharge}</span>
+            </div>
+            <hr/>
+            <div>
+              <b>Total Amount <span style={{float:"right"}}>₹{total}</span></b>
+            </div>
+            <hr/>
+            <button className="btn btn-warning btn-block"  style={{
+              padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
               onClick={handleProceedToBuy}>Place order</button> 
-              </div>
             </div>
             :null
           }
           {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}      
         </div>
       </div>
+    {/* <Footer/>   */}
   </React.Fragment>
   )
 }

@@ -1,7 +1,8 @@
 import React, { useEffect} from 'react';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
-import Header from './Header';
+import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const SuccessPage = () =>{
     const history = useHistory();
@@ -19,6 +20,7 @@ const SuccessPage = () =>{
                     The order is placed successfully!
                     </h1>
                 </div>
+            {/* <Footer/>     */}
         </React.Fragment>
     )
 }

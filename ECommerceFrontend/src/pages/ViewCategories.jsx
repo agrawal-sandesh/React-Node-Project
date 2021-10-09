@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Category from '../components/Category';
-import Header from './Header';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ViewCategories = () =>{
   const history = useHistory();
@@ -32,25 +33,26 @@ const ViewCategories = () =>{
   return (
   <React.Fragment>
     <Header/>
-    <div class="container-fluid">
-      <div className="display-4">
-        Categories
+      <div class="container-fluid">
+        <div className="display-4 ml-4">
+          Categories
+        </div>
+        <div className="row">
+          {
+            categoryData ? 
+              categoryData.map(category => 
+              <Category 
+              key={category.category_id}
+              category={category}
+              handleClick={handleClick} 
+              />
+            ):
+            null
+          }
+          {errorMessage ? <h2>{errorMessage}</h2>: null}
+        </div>
       </div>
-      <div className="row">
-        {
-          categoryData ? 
-            categoryData.map(category => 
-            <Category 
-            key={category.category_id}
-            category={category}
-            handleClick={handleClick} 
-            />
-          ):
-          null
-        }
-        {errorMessage ? <h2>{errorMessage}</h2>: null}
-      </div>
-    </div>
+    <Footer/>
   </React.Fragment>
   )
 }

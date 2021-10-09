@@ -86,7 +86,7 @@ const SignUp =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-6 offset-3">        
+          <div className="col-sm-6 mt-4 offset-3">        
             <form 
               style={{ 
                 border: "1px solid gray  ", 

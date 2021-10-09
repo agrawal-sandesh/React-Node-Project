@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
-import Header from './Header';
+import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const ViewProductDetails = () =>{
   const history = useHistory();
@@ -71,10 +72,10 @@ const ViewProductDetails = () =>{
   }
 
   return (
-  <React.Fragment className="container">
+  <React.Fragment>
     <Header/>
       <div className="container-fluid">
-        <div className="display-4">
+        <div className="display-4 ml-4">
           Products Details
         </div>
         <div className="row">
@@ -127,7 +128,8 @@ const ViewProductDetails = () =>{
           </div>
         </div>
           {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
-      </div>    
+      </div> 
+    {/* <Footer/>      */}
   </React.Fragment>
   )
 }

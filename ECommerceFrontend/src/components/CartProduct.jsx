@@ -3,40 +3,46 @@ import '../index.css';
 
 const CartProduct = (props) => {
 return (
-<div className="row">
-  <div className='col-md-12'>
-    <div class="cart-box">
-      <img class="image-box" src={props.cartProduct.image} alt="Card image"/>
-      <span style={{ position: "relative", left: "5%", bottom:"25px"}}>
-        <strong>{props.cartProduct.name}</strong>
-      </span>
+<div class="cart-box"> 
+    <div className="row">
+        <div className='col-md-3'>
+          <img class="image-box" src={props.cartProduct.image} alt="Card image"/>
+        </div>
 
-      <span style={{ position: "relative", float:"right"}}>
-        <strong>Rate: </strong> ₹{props.cartProduct.rate}
-      </span>
+        <div className='col-md-3 mt-3'>
+          <div class='font'>
+            {props.cartProduct.name}
+          </div>
+          <div className="mt-5"> 
+            <button 
+              onClick={()=> props.handleDecrementItem(props.cartProduct.cart_id)}
+              disabled={parseInt(props.cartProduct.quantity)<=1}>-
+            </button>
+            <span style={{ paddingLeft: '10px', paddingRight: '10px'}}>
+              {props.cartProduct.quantity} 
+            </span>
+            <button 
+              onClick={()=> props.handleIncrementItem(props.cartProduct.cart_id)}>+
+            </button> 
+          </div>
+        </div>
 
-      <span style={{ position: "relative", left: "15%", bottom:"25px"}}> 
-        <button 
-          onClick={()=> props.handleDecrementItem(props.cartProduct.cart_id)}
-          disabled={parseInt(props.cartProduct.quantity)<=1} 
-        >-</button>
-        <span style={{ paddingLeft: '10px', paddingRight: '10px'}}>
-          {props.cartProduct.quantity} 
-        </span>
-        <button onClick={()=> props.handleIncrementItem(props.cartProduct.cart_id)}>+</button> 
-      </span>
-
-      <span style={{ position: "relative", left: "25%",bottom:"30px"}}>
-        <strong>Amount: </strong> ₹{parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
-      </span>
-
-      <span style={{ position: "relative", left:"5%", top:"25px"}}
-        onClick={()=> props.handleRemoveItem(props.cartProduct.cart_id)}>
-        <u style={{color:"red"}}>Remove item</u>
-      </span>
-      
-    </div>
-  </div>
+        <div className='col-md-3 mt-3'> 
+          <div><strong>
+            Rate: ₹{props.cartProduct.rate}
+          </strong></div>
+          <div className='mt-5'><strong>
+            Amount: ₹{parseInt(props.cartProduct.rate)*parseInt(props.cartProduct.quantity)}
+          </strong></div>
+        </div>
+        
+        <div className='col-md-3 mt-2'>
+          <button className="btn btn-link"
+            onClick={()=> props.handleRemoveItem(props.cartProduct.cart_id)}>
+            REMOVE
+          </button>
+        </div>
+    </div> 
 </div>
 )
 }
