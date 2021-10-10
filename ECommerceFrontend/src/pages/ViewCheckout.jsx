@@ -56,7 +56,6 @@ const ViewCheckout = () =>{
     })
     .then(response => {
       if(response.data.status === 'success'){
-        console.log(response.data);
         setAddressData(response.data.res);
       }
       else

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import Login from './pages/Login';
 import ViewCategories from './pages/ViewCategories';
 import ViewProducts from './pages/ViewProducts';
@@ -8,11 +8,11 @@ import ViewCart from './pages/ViewCart';
 import ViewCheckout from './pages/ViewCheckout';
 import SignUp from './pages/SignUp';
 import SuccessPage from './pages/SuccessPage'
-import { useCookies } from 'react-cookie';
+import MyProfile from './pages/MyProfile'
+import ViewOrder from './pages/ViewOrder';
 import './index.css';
 
 const App = () => { 
-  const [cookies, setCookie, removeCookie] = useCookies(['PMartSecrete']);
   return (
     <Router>
       <React.Fragment>
@@ -25,6 +25,9 @@ const App = () => {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/successpage" component={SuccessPage}/>
+            <Route path="/myprofile" component={MyProfile}/>
+            <Route path="/myorder" component={ViewOrder}/>
+
           </Switch>
       </React.Fragment>
     </Router>   

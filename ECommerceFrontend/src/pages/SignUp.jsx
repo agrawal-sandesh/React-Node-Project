@@ -18,7 +18,6 @@ const SignUp =()=>{
   const [errorMessageAddress, setErrorMessageAddress] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
   const [userAlreadyRegistered,setUserAlreadyRegistered] = useState(false);
-  const [cookies, setCookie] = useCookies(['PMartSecrete']);
 
 
   const validateName = (event)=>{
@@ -86,7 +85,7 @@ const SignUp =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-6 mt-4 offset-3">        
+          <div className="col-md-6 mt-4 offset-3">        
             <form 
               style={{ 
                 border: "1px solid gray  ", 
