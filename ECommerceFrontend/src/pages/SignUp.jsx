@@ -17,7 +17,6 @@ const SignUp =()=>{
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
   const [errorMessageAddress, setErrorMessageAddress] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
-  const [userAlreadyRegistered,setUserAlreadyRegistered] = useState(false);
 
 
   const validateName = (event)=>{
@@ -51,6 +50,9 @@ const SignUp =()=>{
 
 
   const signUpSubmit = ()=>{
+    if(email && password && name && contact && address && !errorMessageEmail 
+      && !errorMessagePassword && !errorMessageName && !errorMessageAddress && !errorMessageContact)
+      {
     axios
     .post('http://localhost:4000/signup', {
       name: name,
@@ -70,7 +72,9 @@ const SignUp =()=>{
       }
       else if(response.data.status === 'failed' &&
       response.data.msg==='User already registered'){
-        setUserAlreadyRegistered(true)
+        alert('Email or Contact is already Registered')
+        setEmail('')
+        setContact('')
       }
       else{
         alert('SignUp Failed')
@@ -78,8 +82,9 @@ const SignUp =()=>{
     })
     .catch(function (error) {
       alert(error.message);
-    });
+    })
   }
+  };
     
   return (
     <React.Fragment>
@@ -173,15 +178,8 @@ const SignUp =()=>{
                 successMessage ?  
                 <div className="text-center">
                 <><span className="text-success">Sign Up Successful!!
-                <u className="text-primary" onClick={handleLogin}> Login?</u></span><br/></>
-                </div>
-                :null
-              }
-              {
-                userAlreadyRegistered ?
-                <div className="text-center">
-                <><span className="text-danger">Email or Contact already Registered
-                </span><br/></>
+                <span className="text-primary" onClick={handleLogin} style={{cursor:"pointer"}}> 
+                 Login?</span></span></>
                 </div>
                 :null
               }
@@ -189,10 +187,6 @@ const SignUp =()=>{
                 type="button"
                 className="btn btn-block btn-primary" 
                 style={{padding:"2% 8%", float:"right"}}
-                disabled={!(email && password && name && contact && address &&
-                !errorMessageEmail && !errorMessagePassword && !errorMessageName 
-                && !errorMessageAddress && !errorMessageContact
-                )} 
                 onClick={signUpSubmit}
               >
                 Signup

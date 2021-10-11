@@ -33,6 +33,7 @@ const Login =()=>{
   }
 
   const loginSubmit = ()=>{
+    if (email && password && !errorMessageEmail && !errorMessagePassword){
     axios
     .post('http://localhost:4000/login', {
       email: email,
@@ -43,12 +44,15 @@ const Login =()=>{
         setCookie('Token', response.data.res)
         history.push("/");
       }else{
-        alert('User not registered')
+        alert('User not registered, Try again!!')
+        setEmail('');
+        setPassword('');
       }
     })
     .catch(function (error) {
       alert(error.message);
     });
+  }
   }
     
   return (
@@ -102,7 +106,6 @@ const Login =()=>{
                 type="button"
                 className="btn btn-block btn-success" 
                 style={{padding:"2% 8%"}}
-                disabled={!(email && password && !errorMessageEmail && !errorMessagePassword)} 
                 onClick={loginSubmit}
               >
                 Login
