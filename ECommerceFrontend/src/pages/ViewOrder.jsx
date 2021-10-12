@@ -7,19 +7,42 @@ import Footer from '../components/Footer';
 
 const ViewOrder = () =>{
   const history = useHistory();
-  const [errorMessage, setErrorMessage] = useState('');
-  const [subTotal, setSubTotal] = useState(0);
-  const [deliveryCharge, setDeliveryCharge] = useState(0);
-  const [total, setTotal] = useState(0);
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
 
   useEffect(()=>{
     if(!cookies.Token) history.push("/login");
-    getOrderData();
+    setOrderData();
+    getPaymentData();
   }, [])
 
-  const getOrderData = () =>{
-    axios.post('http://localhost:4000/myorders',{
+  const getPaymentData = () =>{
+    axios.post('http://localhost:4000/mycart',{
+      customerId: cookies.Token.customer_id
+    })
+    .then(response => {
+      if(response.data.status === 'success'){
+        setCheckoutProductData(response.data.res);
+        let tempSubTotal = 0
+        response.data.res.forEach(item =>{
+          tempSubTotal = parseInt(tempSubTotal) + (parseInt(item.quantity) * parseInt(item.rate))
+        })
+        setSubTotal(tempSubTotal)
+        let tempDeliveryCharge = tempSubTotal * 8/100
+        setDeliveryCharge(tempDeliveryCharge)
+        setTotal(tempSubTotal + tempDeliveryCharge)
+      }
+      else{
+        setCheckoutProductData([]);
+        setErrorMessage(response.data.msg);
+      }
+    })
+    .catch(error => {
+      setErrorMessage(error);
+    })
+  }
+
+  const setOrderData = () =>{
+    axios.post('http://localhost:4000/orders',{
       customerId: cookies.Token.customer_id
     })
     .then(response => {

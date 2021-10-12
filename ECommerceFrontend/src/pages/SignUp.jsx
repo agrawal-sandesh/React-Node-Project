@@ -2,7 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import '../index.css';
-import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope,faEye,faUser,faPhone,faLock,faAddressBook } from "@fortawesome/free-solid-svg-icons";
+
+const userIcon = <FontAwesomeIcon icon={faUser} />;
+const emailIcon=<FontAwesomeIcon icon={faEnvelope}/>;
+const contactIcon = <FontAwesomeIcon icon={faPhone} />;
+const passwordIcon=<FontAwesomeIcon icon={faLock}/>;
+const addressIcon=<FontAwesomeIcon icon={faAddressBook}/>;
+const eye = <FontAwesomeIcon icon={faEye} />;
+
 
 const SignUp =()=>{
   const history = useHistory();
@@ -17,6 +26,7 @@ const SignUp =()=>{
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
   const [errorMessageAddress, setErrorMessageAddress] = useState(false);
   const [successMessage, setSuccessMessage] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
 
 
   const validateName = (event)=>{
@@ -85,6 +95,10 @@ const SignUp =()=>{
     })
   }
   };
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
     
   return (
     <React.Fragment>
@@ -102,13 +116,18 @@ const SignUp =()=>{
             >
               <h3 className="text-black text-center mb-4">Looks, Like you are new Here!!</h3>
               <div className="form-group">
-                <input 
-                  className="form-control"
-                  placeholder="Full Name"
-                  onChange={validateName} 
-                  value={name}
-                  id="input1"
-                />
+                <div class="input-group">
+                  <div class="input-group-addon">
+                      <i>{userIcon}</i>
+                  </div>
+                  <input 
+                    className="form-control"
+                    placeholder="Full Name"
+                    onChange={validateName} 
+                    value={name}
+                    id="input1"
+                  />
+                </div>
               </div>
               {
                 errorMessageName ? 
@@ -116,13 +135,18 @@ const SignUp =()=>{
                 null
               }
               <div className="form-group">
-                <input 
-                  className="form-control" 
-                  placeholder="Email Address"
-                  onChange={validateEmail} 
-                  value={email}
-                  id="input1"  
-                />
+                <div class="input-group">
+                  <div class="input-group-addon">
+                      <i>{emailIcon}</i>
+                  </div>
+                  <input 
+                    className="form-control" 
+                    placeholder="Email Address"
+                    onChange={validateEmail} 
+                    value={email}
+                    id="input1"  
+                  />
+                </div>
               </div>
               {
                 errorMessageEmail ? 
@@ -131,43 +155,61 @@ const SignUp =()=>{
               }
               <div className="form-row">
                   <div className="form-group col-md-6">
-                      <input 
-                        className="form-control" 
-                        placeholder="Contact Number"
-                        onChange={validateContact} 
-                        value={contact}
-                        id="input1"  
-                      />
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                          <i>{contactIcon}</i>
+                      </div>
+                        <input 
+                          className="form-control" 
+                          placeholder="Contact Number"
+                          onChange={validateContact} 
+                          value={contact}
+                          id="input1"  
+                        />
+                      </div>
                   </div>
                   <div className="form-group col-md-6">
-                    <input 
-                      className="form-control" 
-                      placeholder="Create Password"
-                      onChange={validatePassword} 
-                      value={password} 
-                      id="input1" 
-                    />
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                          <i>{passwordIcon}</i>
+                      </div>
+                      <input 
+                        type={passwordShown ? "text" : "password"}
+                        className="form-control" 
+                        onChange={validatePassword} 
+                        value={password}
+                        placeholder="Password"
+                        id="input1"
+                      />
+                    <div class="input-group-addon">
+                        <i onClick={togglePasswordVisiblity}>{eye}</i>
+                    </div>
                   </div>
+                </div>
               </div>
               {
                 errorMessageContact ? 
                 <><span className="text-danger" style={{float:'left'}}>Enter Valide Contact No</span></>:
                 null
               }
-
               {
                 errorMessagePassword ? 
                 <><span className="text-danger" style={{float:'right'}}>Enter Valide Password</span><br/></>:
                 null
               }
               <div className="form-group">
-                <textarea 
-                  className="form-control" 
-                  placeholder="Enter Address Details"
-                  onChange={validateAddress} 
-                  value={address}
-                  id="input1" 
-                />
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                        <i>{addressIcon}</i>
+                    </div>
+                    <textarea 
+                      className="form-control" 
+                      placeholder="Enter Address Details"
+                      onChange={validateAddress} 
+                      value={address}
+                      id="input1" 
+                    />
+                </div>
               </div>
               {
                 errorMessageAddress ?  

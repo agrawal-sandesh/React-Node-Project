@@ -3,7 +3,14 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import '../index.css';
 import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
+const eye = <FontAwesomeIcon icon={faEye} />;
+const emailIcon=<FontAwesomeIcon icon={faEnvelope}/>;
+const lockIcon=<FontAwesomeIcon icon={faLock}/>
 
 const Login =()=>{
   const history = useHistory();
@@ -12,6 +19,7 @@ const Login =()=>{
   const [errorMessageEmail, setErrorMessageEmail] = useState(false);
   const [errorMessagePassword, setErrorMessagePassword] = useState(false);
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
+  const [passwordShown, setPasswordShown] = useState(false);
 
   useEffect(()=>{
     if(cookies.Token) history.push("/");
@@ -54,7 +62,11 @@ const Login =()=>{
     });
   }
   }
-    
+  
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -69,15 +81,20 @@ const Login =()=>{
                 backgroundColor:"white"
               }}
             >
-              <h2 className="text-center">Login!</h2>
+              <h2 className="text-center">Welcome!</h2>
               <div className="form-group">
-                <input 
-                  className="form-control" 
-                  onChange={validateEmail} 
-                  value={email}
-                  placeholder="Email Address"
-                  id="input1" 
-                />
+                <div class="input-group">
+                  <div class="input-group-addon">
+                      <i>{emailIcon}</i>
+                  </div>
+                  <input 
+                    className="form-control" 
+                    onChange={validateEmail} 
+                    value={email}
+                    placeholder="Email Address"
+                    id="input1" 
+                  />
+                </div>
               </div>
               <div>
               {
@@ -87,13 +104,22 @@ const Login =()=>{
               }
               </div>
               <div className="form-group">
-                <input 
-                  className="form-control" 
-                  onChange={validatePassword} 
-                  value={password}
-                  placeholder="Password"
-                  id="input1"
-                />
+                <div class="input-group">
+                  <div class="input-group-addon">
+                      <i>{lockIcon}</i>
+                  </div>
+                  <input 
+                    type={passwordShown ? "text" : "password"}
+                    className="form-control" 
+                    onChange={validatePassword} 
+                    value={password}
+                    placeholder="Password"
+                    id="input1"
+                  />
+                  <div class="input-group-addon">
+                      <i onClick={togglePasswordVisiblity}>{eye}</i>
+                  </div>
+                </div>
               </div>
               <div>
               {

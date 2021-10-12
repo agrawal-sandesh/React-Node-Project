@@ -67,6 +67,23 @@ const ViewCheckout = () =>{
     });
   }
 
+  // const setMyOrder=()=>{
+  //   axios.post('http://localhost:4000/myorder',{
+  //     customerId:cookies.Token.customer_id
+  //   })
+  //   .then(response => {
+  //     if(response.data.status === 'success'){
+  //       setAddressData(response.data.res);
+  //     }
+  //     else
+  //       setAddressData([]);
+  //     setErrorMessage(response.data.msg);
+  //   })
+  //   .catch(error => {
+  //     setErrorMessage(error);
+  //   });
+  // }
+
   const loadScript = (src)  => {
     return new Promise((resolve) => {
         const script = document.createElement("script");
@@ -86,7 +103,7 @@ const ViewCheckout = () =>{
     const result = await axios.post("http://localhost:4000/orders",{
       amount: total
     });
-
+  
     if (!result) {
         alert("Server error. Are you online?");
         return;
@@ -121,7 +138,6 @@ const ViewCheckout = () =>{
           address: addressData[0].address,
         }
     };
-    console.log(options)
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
