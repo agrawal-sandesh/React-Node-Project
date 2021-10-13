@@ -67,22 +67,6 @@ const ViewCheckout = () =>{
     });
   }
 
-  // const setMyOrder=()=>{
-  //   axios.post('http://localhost:4000/myorder',{
-  //     customerId:cookies.Token.customer_id
-  //   })
-  //   .then(response => {
-  //     if(response.data.status === 'success'){
-  //       setAddressData(response.data.res);
-  //     }
-  //     else
-  //       setAddressData([]);
-  //     setErrorMessage(response.data.msg);
-  //   })
-  //   .catch(error => {
-  //     setErrorMessage(error);
-  //   });
-  // }
 
   const loadScript = (src)  => {
     return new Promise((resolve) => {
@@ -121,13 +105,18 @@ const ViewCheckout = () =>{
           const data = {
               orderCreationId: receipt,
               razorpayPaymentId: response.razorpay_payment_id,
-              razorpayOrderId: response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
+              customerId:cookies.Token.customer_id,
+              addressId:addressData[0].address_id,
+              totalAmount:total
           };
           const result = await axios.post("http://localhost:4000/success",data);
-          alert(result.data.msg);
-          // TODO: Redirect to the succes UI page after successfully order
-          history.push('/successpage')
+            if(result.data.status=='success'){         
+              history.push('/successpage')
+            }
+            else{
+              alert('something went wrong')
+            }
         },
         prefill: {
             email: addressData[0].email,
@@ -288,7 +277,7 @@ const handleRemoveAddress=(addressId)=>{
                 <b>Total Payable <span style={{float:"right"}}>₹{total}</span></b>
               </div>
               <hr />
-              <button className="btn btn-warning btn-block"  style={{
+              <button className="btn btn-success btn-block"  style={{
                 padding:"2% 10%",borderRadius:"20px",fontWeight:'bold'}}
                 onClick={handleProceedToPayment}>Proceed to Make Payment</button> 
               </div>

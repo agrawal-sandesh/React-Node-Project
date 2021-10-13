@@ -389,31 +389,92 @@ routing.post("/orders", async(req, res) => {
 
 routing.post("/success", async(req, res) => {
     try {
-        const {
+        let {
             orderCreationId,
             razorpayPaymentId,
-            razorpayOrderId,
             razorpaySignature,
+            customerId,
+            addressId,
+            totalAmount
         } = req.body;
 
         const shasum = crypto.createHmac("sha256", "KUoEbctKHoLQDoAeOlnbBH7v");
         shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
         const digest = shasum.digest("hex");
 
-        // comaparing our digest with the actual signature
         if (digest !== razorpaySignature)
             return res.status(400).json({ msg: "Transaction not legit!" });
 
-        // THE PAYMENT IS LEGIT & VERIFIED
-        // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
+        if (customerId && addressId && totalAmount && razorpayPaymentId) {
+            db.all(`INSERT INTO order_table (payment_id, address_id, total_amount, payment_medium,
+                     delivery_status, customer_id)
+                        VALUES('${razorpayPaymentId}', '${addressId}','${totalAmount}', 'UPI',
+                         'Pending','${customerId}')`,
+                (err) => {
+                    if (err) {
+                        res.send({ status: 'failed', msg: err.message })
+                    }
+                    if (!err) {
+                        db.all(`SELECT order_id FROM order_table WHERE payment_id='${razorpayPaymentId}' order by order_id desc`,
+                            (err, row) => {
+                                if (err) {
+                                    res.send({ status: 'failed', msg: err.message })
+                                }
+                                if (row) {
+                                    const orderId = row[0].order_id;
+                                    if (orderId) {
+                                        db.all(`SELECT ct.cart_id, ct.product_id, ct.quantity, pt.rate FROM cart_table ct INNER
+                                                    JOIN product_table pt ON ct.product_id  = pt.product_id WHERE customer_id = '${customerId}'`,
+                                            (err, row) => {
+                                                if (err) {
+                                                    res.send({ status: 'failed', msg: err.message })
+                                                }
+                                                if (row) {
+                                                    row.forEach(element => {
+                                                        console.log(orderId, element.product_id, element.quantity, element.rate, totalAmount);
+                                                        db.all(`INSERT INTO order_product_table (order_id, product_id, quantity, rate, total_amount) 
+                                                                    VALUES('${orderId}','${element.product_id}','${element.quantity}',
+                                                                    '${element.rate}'.'${totalAmount}')`,
+                                                            (err) => {
+                                                                if (err) {
+                                                                    res.send({ status: 'failed', msg: err.message })
+                                                                }
+                                                                if (!err) {
+                                                                    db.all(`DELETE FROM cart_table WHERE cart_id='${element.cart_id}'`,
+                                                                        (err) => {
+                                                                            if (err) {
+                                                                                res.send({ status: 'failed', msg: err.message })
+                                                                            }
+                                                                            if (!err) {
+                                                                                res.send({ status: 'success', msg: "Removed Item from cart" })
+                                                                            } else {
+                                                                                res.send({ status: 'failed', msg: "Can not Remove Item from the cart table" })
+                                                                            }
+                                                                        })
+                                                                } else {
+                                                                    res.send({ status: 'failed', msg: "Unable to delete cart item" })
+                                                                }
+                                                            });
+                                                    })
+                                                } else {
+                                                    res.send({ status: 'failed', msg: "Can not Insert the address" })
+                                                }
+                                            })
+                                    } else {
+                                        res.send({ status: 'failed', msg: 'Could not find order Id' })
+                                    }
+                                }
+                            })
+                    } else {
+                        res.send({ status: 'failed', msg: "Can not get the order id" })
+                    }
+                })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get the required input to proceed' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
 
-        res.json({
-            msg: "success",
-            orderId: razorpayOrderId,
-            paymentId: razorpayPaymentId,
-        });
-    } catch (error) {
-        res.status(500).send(error);
     }
 });
 
