@@ -20,7 +20,7 @@ const ViewProductDetails = () =>{
   const getProductDetails = () =>{
     axios.post('http://localhost:4000/productdetails',{
       productId: productId,
-      customerId: cookies.Token.customer_id
+      customerId: cookies ? (cookies.Token? cookies.Token.customer_id : '') : ''
     })
     .then(response => {
       if(response.data.status === 'success')
@@ -36,7 +36,7 @@ const ViewProductDetails = () =>{
   const handleAddToCart = () =>{
     axios.post('http://localhost:4000/addcart',{
       productId: productId,
-      customerId: cookies.Token.customer_id
+      customerId: cookies ? (cookies.Token? cookies.Token.customer_id : '') : ''
     })
     .then(response => {
         if(response.data.status === 'success')
@@ -54,7 +54,7 @@ const ViewProductDetails = () =>{
   const handleOrderNow = () =>{
     axios.post('http://localhost:4000/addcart',{
       productId: productId,
-      customerId: cookies.Token.customer_id
+      customerId: cookies ? (cookies.Token? cookies.Token.customer_id : '') : ''
     })
     .then(response => {
         if(response.data.status === 'success')

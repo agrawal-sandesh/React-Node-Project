@@ -9,7 +9,7 @@ import ViewCheckout from './pages/ViewCheckout';
 import SignUp from './pages/SignUp';
 import SuccessPage from './pages/SuccessPage'
 import MyProfile from './pages/MyProfile'
-// import ViewOrder from './pages/ViewOrder';
+import ViewOrder from './pages/ViewOrder';
 import './index.css';
 
 const App = () => { 
@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/signup" component={SignUp} />
             <Route path="/successpage" component={SuccessPage}/>
             <Route path="/myprofile" component={MyProfile}/>
-            {/* <Route path="/myorder" component={ViewOrder}/> */}
+            <Route path="/myorder" component={ViewOrder}/>
           </Switch>
       </React.Fragment>
     </Router>   

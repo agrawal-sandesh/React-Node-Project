@@ -409,66 +409,43 @@ routing.post("/success", async(req, res) => {
             db.all(`INSERT INTO order_table (payment_id, address_id, total_amount, payment_medium,
                      delivery_status, customer_id)
                         VALUES('${razorpayPaymentId}', '${addressId}','${totalAmount}', 'UPI',
-                         'Pending','${customerId}')`,
-                (err) => {
-                    if (err) {
-                        res.send({ status: 'failed', msg: err.message })
-                    }
-                    if (!err) {
-                        db.all(`SELECT order_id FROM order_table WHERE payment_id='${razorpayPaymentId}' order by order_id desc`,
-                            (err, row) => {
-                                if (err) {
-                                    res.send({ status: 'failed', msg: err.message })
-                                }
-                                if (row) {
-                                    const orderId = row[0].order_id;
-                                    if (orderId) {
-                                        db.all(`SELECT ct.cart_id, ct.product_id, ct.quantity, pt.rate FROM cart_table ct INNER
+                         'Delivery Pending','${customerId}')`, (err) => {
+                if (err) res.send({ status: 'failed', msg: err.message })
+                db.all(`SELECT order_id FROM order_table WHERE payment_id='${razorpayPaymentId}' order by order_id desc`, (err, row) => {
+                    if (err) res.send({ status: 'failed', msg: err.message })
+                    if (row) {
+                        const orderId = row[0].order_id;
+                        db.all(`SELECT ct.cart_id, ct.product_id, ct.quantity, pt.rate FROM cart_table ct INNER
                                                     JOIN product_table pt ON ct.product_id  = pt.product_id WHERE customer_id = '${customerId}'`,
-                                            (err, row) => {
+                            (err, row) => {
+                                if (err) res.send({ status: 'failed', msg: err.message })
+                                if (row) {
+                                    row.forEach(element => {
+                                        db.all(`INSERT INTO order_product_table (order_id, product_id, quantity, rate, total_amount) 
+                                                                    VALUES('${orderId}','${element.product_id}','${element.quantity}',
+                                                                    '${element.rate}',
+                                                                    '${(parseInt(element.rate)*parseInt(element.quantity))
+                                                                        +(parseInt(element.rate)*parseInt(element.quantity))*8/100}')`,
+                                            (err) => {
                                                 if (err) {
                                                     res.send({ status: 'failed', msg: err.message })
                                                 }
-                                                if (row) {
-                                                    row.forEach(element => {
-                                                        console.log(orderId, element.product_id, element.quantity, element.rate, totalAmount);
-                                                        db.all(`INSERT INTO order_product_table (order_id, product_id, quantity, rate, total_amount) 
-                                                                    VALUES('${orderId}','${element.product_id}','${element.quantity}',
-                                                                    '${element.rate}'.'${totalAmount}')`,
-                                                            (err) => {
-                                                                if (err) {
-                                                                    res.send({ status: 'failed', msg: err.message })
-                                                                }
-                                                                if (!err) {
-                                                                    db.all(`DELETE FROM cart_table WHERE cart_id='${element.cart_id}'`,
-                                                                        (err) => {
-                                                                            if (err) {
-                                                                                res.send({ status: 'failed', msg: err.message })
-                                                                            }
-                                                                            if (!err) {
-                                                                                res.send({ status: 'success', msg: "Removed Item from cart" })
-                                                                            } else {
-                                                                                res.send({ status: 'failed', msg: "Can not Remove Item from the cart table" })
-                                                                            }
-                                                                        })
-                                                                } else {
-                                                                    res.send({ status: 'failed', msg: "Unable to delete cart item" })
-                                                                }
-                                                            });
+                                                db.all(`DELETE FROM cart_table WHERE cart_id='${element.cart_id}'`,
+                                                    (err) => {
+                                                        if (err) {
+                                                            res.send({ status: 'failed', msg: err.message })
+                                                        }
                                                     })
-                                                } else {
-                                                    res.send({ status: 'failed', msg: "Can not Insert the address" })
-                                                }
-                                            })
-                                    } else {
-                                        res.send({ status: 'failed', msg: 'Could not find order Id' })
-                                    }
+                                            });
+                                    })
+                                    res.send({ status: 'success', msg: "Operation Successful!" })
+                                } else {
+                                    res.send({ status: 'failed', msg: "Couldn't find the data" })
                                 }
                             })
-                    } else {
-                        res.send({ status: 'failed', msg: "Can not get the order id" })
-                    }
+                    } else res.send({ status: 'failed', msg: 'Could not find order Id' })
                 })
+            })
         } else {
             res.send({ status: 'failed', msg: 'Could not get the required input to proceed' })
         }
@@ -477,5 +454,30 @@ routing.post("/success", async(req, res) => {
 
     }
 });
+
+routing.post("/orderitems", async(req, res) => {
+    try {
+        const { customerId } = req.body;
+        if (customerId) {
+            db.all(`SELECT pt.name,pt.details,pt.image, ot.delivery_status, opt.quantity,opt.rate, opt.total_amount FROM order_table ot
+            INNER JOIN order_product_table opt on ot.order_id = opt.order_id
+            INNER JOIN product_table pt ON pt.product_id = opt.product_id 
+            WHERE ot.customer_id ='${customerId}'`, (err, row) => {
+                if (err) {
+                    res.send({ status: 'failed', msg: err.message })
+                }
+                if (row.length > 0) {
+                    res.send({ status: 'success', res: row })
+                } else {
+                    res.send({ status: 'failed', msg: "No order data found" })
+                }
+            })
+        } else {
+            res.send({ status: 'failed', msg: 'Could not get customer ID' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
 
 module.exports = routing;
