@@ -21,7 +21,7 @@ const Header = () =>{
           <Link className="navbar-brand font-styling" to="/">PMart</Link>
           <div className="d-flex justify-content-center" style={{flex: 1}}>
             <div className="search-bar pr-3">
-              <input className="search-bar-input" type="text" placeholder="Search Items" />
+              <input className="search-bar-input" type="text" placeholder="Search for products, brands and more" />
               <FontAwesomeIcon icon={faSearch} style={{color: '#430297'}} onClick={()=> alert("hello")}/>
             </div>            
           </div>

@@ -30,12 +30,45 @@ routing.post("/login", async(req, res) => {
 
 routing.get("/categories", async(req, res) => {
     try {
-        db.all(`SELECT * FROM category_table`, (err, row) => {
+        db.all(`SELECT ct.category_id, ct.name as category_name, pt.product_id, pt.name as product_name, pt.is_available, pt.image FROM category_table ct
+        INNER JOIN product_table pt on ct.category_id = pt.category_id ORDER BY ct.category_id;`, (err, row) => {
             if (err) {
                 res.send({ status: 'failed', msg: err.message })
             }
+            let finalRow = [];
             if (row.length > 0) {
-                res.send({ status: 'success', res: row });
+                let uniqueCategoryId = '';
+                let categoryObject = {};
+                for (let i = 0; i <= row.length; i++) {
+                    if (i === row.length) {
+                        finalRow.push(categoryObject);
+                        categoryObject = {};
+                        uniqueCategoryId = '';
+                    } else {
+                        let categoryProduct = row[i];
+                        let productObject = {
+                            product_id: categoryProduct.product_id,
+                            product_img: categoryProduct.image,
+                            product_name: categoryProduct.product_name,
+                            is_available: categoryProduct.is_available
+                        }
+                        if (uniqueCategoryId !== categoryProduct.category_id) {
+                            if (Object.keys(categoryObject).length > 0) {
+                                finalRow.push(categoryObject)
+                                categoryObject = {}
+                            }
+                            categoryObject = {
+                                category_id: categoryProduct.category_id,
+                                category_name: categoryProduct.category_name,
+                                products: [productObject]
+                            }
+                            uniqueCategoryId = categoryProduct.category_id
+                        } else {
+                            categoryObject.products.push(productObject);
+                        }
+                    }
+                }
+                res.send({ status: 'success', res: finalRow });
             } else {
                 res.send({ status: 'failed', msg: 'No Data Found' })
             }

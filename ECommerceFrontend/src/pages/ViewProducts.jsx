@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import Product from '../components/Product';
 import Header from '../components/Header';
-// import Footer from '../components/Footer';
+import Footer from '../components/Footer';
 
 const ViewProducts = () =>{
   const history = useHistory();
@@ -55,8 +55,9 @@ const ViewProducts = () =>{
           {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
         </div>
       </div>
+      <Footer/>
   </React.Fragment>
-  )
+  ) 
 }
 
 export default ViewProducts;

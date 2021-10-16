@@ -51,7 +51,7 @@ const SignUp =()=>{
 
   const validateAddress = (event)=>{
     setAddress(event.target.value);
-    setErrorMessageAddress(!(event.target.value.length > 10))
+    setErrorMessageAddress(!(event.target.value.length > 8))
   }
 
   const handleLogin=()=>{
@@ -131,7 +131,7 @@ const SignUp =()=>{
               </div>
               {
                 errorMessageName ? 
-                <><span className="text-danger">Enter Valid Name</span><br/></>:
+                <><span className="text-danger">Enter Full Name</span><br/></>:
                 null
               }
               <div className="form-group">
@@ -150,7 +150,7 @@ const SignUp =()=>{
               </div>
               {
                 errorMessageEmail ? 
-                <><span className="text-danger">Enter Valide Email</span><br/></>:
+                <><span className="text-danger">Email Should contain @</span><br/></>:
                 null
               }
               <div className="form-row">
@@ -189,12 +189,12 @@ const SignUp =()=>{
               </div>
               {
                 errorMessageContact ? 
-                <><span className="text-danger" style={{float:'left'}}>Enter Valide Contact No</span></>:
+                <><span className="text-danger" style={{float:'left'}}>Contact should be 10 character long</span></>:
                 null
               }
               {
                 errorMessagePassword ? 
-                <><span className="text-danger" style={{float:'right'}}>Enter Valide Password</span><br/></>:
+                <><span className="text-danger" style={{float:'right'}}>Password should have atleast 6 character</span><br/></>:
                 null
               }
               <div className="form-group">
@@ -228,19 +228,18 @@ const SignUp =()=>{
               <button 
                 type="button"
                 className="btn btn-block btn-primary" 
-                style={{padding:"2% 8%", float:"right"}}
+                style={{padding:"2% 8%", float:"right",marginBottom:"3%"}}
                 onClick={signUpSubmit}
               >
                 Signup
               </button>
               <div className="text-center">
-              <button 
-                type="button"
-                className="btn btn-link"
+              <span 
+                id="link"
                 onClick={handleLogin}
               >
                 Existing User? Log in 
-              </button>
+              </span>
               </div>
             </form>
           </div>

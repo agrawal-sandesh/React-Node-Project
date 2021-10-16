@@ -99,7 +99,7 @@ const Login =()=>{
               <div>
               {
                 errorMessageEmail ? 
-                <><span className="text-danger">Enter Your Email address</span></>:
+                <><span className="text-danger">Enter Valid Email address</span></>:
                 null
               }
               </div>
@@ -124,26 +124,25 @@ const Login =()=>{
               <div>
               {
                 errorMessagePassword ? 
-                <><span className="text-danger">Enter Valid Password</span></>:
+                <><span className="text-danger">Password Should be Mininum 6 Characters long</span></>:
                 null
               }
               </div>
               <button 
                 type="button"
                 className="btn btn-block btn-success" 
-                style={{padding:"2% 8%"}}
+                style={{padding:"2% 8%",marginBottom:"3%"}}
                 onClick={loginSubmit}
               >
                 Login
               </button>
               <div className="text-center">
-              <button 
-                type="button"
-                className="btn btn-link"
+              <span
+                id="link"
                 onClick={handleSignUp}
               >
                 Create a new account ?
-              </button>
+              </span>
               </div>
             </form>
           </div>

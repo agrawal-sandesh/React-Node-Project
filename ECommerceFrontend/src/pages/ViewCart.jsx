@@ -122,7 +122,7 @@ const ViewProducts = () =>{
             }
           </div>
           {
-            cartProductData.length>0? 
+            cartProductData.length > 0? 
             <div className='col-md-4 ml-2 mt-4' 
               style={{
               backgroundColor: "white",

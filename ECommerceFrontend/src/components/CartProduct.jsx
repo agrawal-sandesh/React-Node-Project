@@ -36,11 +36,12 @@ return (
           </strong></div>
         </div>
         
-        <div className='col-md-3 mt-2'>
-          <button className="btn btn-link"
+        <div className='col-md-3 mt-5'>
+          <span
+            id="link"
             onClick={()=> props.handleRemoveItem(props.cartProduct.cart_id)}>
             REMOVE
-          </button>
+          </span>
         </div>
     </div> 
 </div>

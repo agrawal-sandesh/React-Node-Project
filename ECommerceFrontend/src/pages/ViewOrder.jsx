@@ -31,7 +31,10 @@ const ViewOrder = () =>{
       setErrorMessage(error);
     })
   }
-console.log(orderDetails)
+
+  const handleMoveHome=()=>{
+    history.push('/')
+  }
 return (
   <React.Fragment>
       <Header/>
@@ -39,6 +42,13 @@ return (
             <div className="display-4 ml-4">
                 Orders Details
             </div>
+            <button 
+                className="btn btn-light"
+                onClick={handleMoveHome}
+                style={{float:"right",marginRight:"5%"}}
+                >
+                    Shop More
+                </button>
             <div className="row" >
               <div className='col-md-10 mt-4 offset-1'>
                     { 

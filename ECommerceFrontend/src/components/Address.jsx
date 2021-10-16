@@ -23,10 +23,12 @@ return (
                     <span className="ml-3"><strong>
                         {props.addressData.contact}
                     </strong></span>  
-                    <button className="btn btn-link" style={{float:"right"}} 
+                    <span
+                        style={{float:"right"}}
+                        id="link" 
                         onClick={()=>props.handleRemoveAddress(props.addressData.address_id)}>
                                 REMOVE ADDRESS
-                    </button><br/><br/>
+                    </span><br/><br/>
                     <div className="ml-4">
                         {props.addressData.address}
                     </div>

@@ -87,11 +87,11 @@ const ViewProductDetails = () =>{
               </div>  
           </div>
           <div className='col-md-7 mt-4'>
-              <div className="card">
-                <div className='card-header bg-gradient-light'>
-                  <h4 className="text-center">{productDetails.name} </h4> 
-                  <h4>Rate: ₹{productDetails.rate} </h4> 
-                  <i>Details: {productDetails.details}</i><br/>
+              <div class="card">
+                <div className='card-header'>
+                  <h4 className="text-center" style={{cursor:"pointer"}}>{productDetails.name} </h4> 
+                  <h4 style={{cursor:"pointer"}}>Rate: ₹{productDetails.rate} </h4> 
+                  <i style={{cursor:"pointer"}}>Details: {productDetails.details}</i><br/>
                 </div>
                 <div className='card-body'>
                   {

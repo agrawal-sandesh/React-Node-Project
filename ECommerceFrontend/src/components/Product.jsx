@@ -3,8 +3,8 @@ import '../index.css';
 
 const Product = (props) => {
   return (  
-    <div className='col-md-3 mt-4 mb-4' style={{marginLeft:"6%"}}>
-      <div className="card">
+    <div className='col-md-3 mt-4 mb-4'>
+      <div className="card" style={{cursor:"pointer"}}>
         <div className='card-header bg-gradient-light'
           onClick={()=> props.handleMoveToNext(props.product.product_id)}> 
           <img className="card-img-top" 
