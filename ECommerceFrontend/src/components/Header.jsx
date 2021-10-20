@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import '.././index.css';
 const Header = () =>{
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(['PMartSecrete']);
+
     const name = cookies ? (cookies.Token ? cookies.Token.name : '') : '';
     if(name.split(' ').length>1){
       var firstName = name.split(' ').slice(0, -1).join(' ');
@@ -21,8 +22,11 @@ const Header = () =>{
           <Link className="navbar-brand font-styling" to="/">PMart</Link>
           <div className="d-flex justify-content-center" style={{flex: 1}}>
             <div className="search-bar pr-3">
-              <input className="search-bar-input" type="text" placeholder="Search for products, brands and more" />
-              <FontAwesomeIcon icon={faSearch} style={{color: '#430297'}} onClick={()=> alert("hello")}/>
+              <input className="search-bar-input" 
+              type="text" 
+              placeholder="Search for products, brands and more"
+              />
+              <FontAwesomeIcon icon={faSearch} style={{color: '#430297'}}/>
             </div>            
           </div>
           <ul className="nav navbar-nav" style={{marginRight:"8%"}}>

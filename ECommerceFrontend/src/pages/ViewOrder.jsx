@@ -8,7 +8,8 @@ const ViewOrder = () =>{
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
   const [orderDetails, setOrderDetails] = useState([]);
-  const [errorMessage,setErrorMessage]=useState('')
+  const [errorMessage,setErrorMessage]=useState('');
+  const [searchItem,setSearchItem]=useState('');
 
   useEffect(()=>{
     if(!cookies.Token) history.push("/login");
@@ -51,9 +52,25 @@ return (
                 </button>
             <div className="row" >
               <div className='col-md-10 mt-4 offset-1'>
+                 
+                    <input
+                        class="ordersearch"
+                        type="text" 
+                        placeholder="Search Your Orders Here.."
+                        onChange={(event)=>{
+                          setSearchItem(event.target.value);
+                        }}
+                        />
                     { 
                       orderDetails ?
-                        orderDetails.map(orderDetails => 
+                        orderDetails.filter(orderDetails=>{
+                          if(searchItem==""){
+                            return orderDetails
+                          }
+                          else if(orderDetails.name.toLowerCase().includes(searchItem.toLowerCase())){
+                            return orderDetails
+                          }
+                        }).map(orderDetails => 
                           <div class="cart-box">
                              <div className="row" >
                                 <div className='col-md-1'>
