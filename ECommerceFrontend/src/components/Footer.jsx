@@ -15,7 +15,6 @@ const Footer = () =>{
             © 2021 Copyright:<span onClick={handleClick}>  Home </span>
             </div>
         </footer>
-      
     )
   }
 

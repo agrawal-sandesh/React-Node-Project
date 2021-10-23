@@ -167,7 +167,7 @@ routing.post("/mycart", async(req, res) => {
                 if (row.length > 0) {
                     res.send({ status: 'success', res: row })
                 } else {
-                    res.send({ status: 'failed', msg: "Cart Empty" })
+                    res.send({ status: 'failed', msg: "Cart Empty Shop Now ?" })
                 }
             })
         } else {
@@ -502,7 +502,7 @@ routing.post("/orderitems", async(req, res) => {
                 if (row.length > 0) {
                     res.send({ status: 'success', res: row })
                 } else {
-                    res.send({ status: 'failed', msg: "No order data found" })
+                    res.send({ status: 'failed', msg: "No orders Yet!" })
                 }
             })
         } else {

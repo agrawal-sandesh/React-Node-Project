@@ -6,6 +6,7 @@ import axios from 'axios';
 import '../index.css';
 import { useCookies } from 'react-cookie';
 import Header from '../components/Header';
+import Image from '.././user.png';
 
 const MyProfile = () =>{
   const history = useHistory();
@@ -38,14 +39,21 @@ const MyProfile = () =>{
     <Header/>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-8 mt-4 offset-2">        
+          <div className="col-md-6 mt-4 offset-3">
+            <div  
+              style={{
+                textAlign:"center",
+                cursor:"pointer",
+                }}>
+              <img style={{height:"20%",width:"20%"}} src={Image} alt='Profile Image'></img>
+            </div>      
             <form 
               style={{  
-                padding: "5%", 
-                backgroundColor:"white"
+                paddingLeft: "15%",
+                paddingRight:"15%" 
               }}
             >
-              <h1 className="text-black text-center" style={{cursor:"context-menu"}}>Personal Information</h1>
+              <h1 className="text-black text-center" style={{cursor:"context-menu"}}>Your Details!</h1>
               <div className="form-group">
                   Name:
                   <input 

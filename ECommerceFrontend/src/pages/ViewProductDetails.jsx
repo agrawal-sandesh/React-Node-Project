@@ -47,7 +47,6 @@ const ViewProductDetails = () =>{
       .catch(error => {
           setErrorMessage(error);
     })
-    alert("Item Added in cart")
   }
 
 
@@ -71,6 +70,7 @@ const ViewProductDetails = () =>{
     history.push(`/mycart`)
   }
 
+
   return (
   <React.Fragment>
     <Header/>
@@ -90,7 +90,7 @@ const ViewProductDetails = () =>{
               <div class="card">
                 <div className='card-header'>
                   <h4 className="text-center" style={{cursor:"pointer"}}>{productDetails.name} </h4> 
-                  <h4 style={{cursor:"pointer"}}>Rate: ₹{productDetails.rate} </h4> 
+                  <h4 style={{cursor:"pointer"}}>Price: ₹{productDetails.rate} </h4> 
                   <i style={{cursor:"pointer"}}>Details: {productDetails.details}</i><br/>
                 </div>
                 <div className='card-body'>

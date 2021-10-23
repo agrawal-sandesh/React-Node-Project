@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
-import Image from './tick.gif';
+import Image from '../success-tick.gif'
 import Footer from '../components/Footer';
 
 const SuccessPage = () =>{
@@ -20,24 +20,27 @@ const SuccessPage = () =>{
     return(
         <React.Fragment>
             <Header/>
-                {/* <div class="layered-image"> */}
                     <div className="container-fluid">
-                        <h2 className="text-center">
-                           Hurray!! Your Order is Placed Successfully! 
-                        </h2>
-                        <div 
-                        onClick={handleMoveOrder}
-                        style={{float:"right",fontSize:"larger",marginRight:"5%"}}
-                        id="link"
+                        <p className="h2 text-center mt-3">
+                           Your Order is Placed Successfully! 
+                        <div className="mt-3"
+                            onClick={handleMoveOrder}
+                            style={{
+                                float:"right",
+                                fontSize:"large",
+                                marginRight:"1%",
+                                textDecorationLine: "underline",
+                            }}
+                            id="link"
                         >
-                           <u> Check order status</u>
+                           Check order status
                         </div>
+                        </p>
                         <br/>
                         <div style={{textAlign:"center",marginTop:"2%"}}>
                             <img style={{height:"25%",width:"25%",paddingBottom:"5%"}} src={Image} alt='success Image'></img>
                         </div><br/>
                     </div>
-                {/* </div> */}
             <Footer/>    
         </React.Fragment>
     )

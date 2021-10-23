@@ -55,7 +55,6 @@ const ViewProducts = () =>{
         getCartData()
       else{
         setCartProductData([]);
-        alert(response.data.msg);
       }
     })
     .catch(error => {
@@ -98,13 +97,31 @@ const ViewProducts = () =>{
     history.push('/checkout')
   }
 
+  const handleAddItem=()=>{
+    history.push('/')
+  }
+
+
   return (
   <React.Fragment>
     <Header/>
       <div className="container-fluid">
+
         <div className="display-4 ml-4">
             Cart
+            { 
+              cartProductData.length>0?
+              <button 
+                className="btn btn-primary mt-4" 
+                style={{float:"right",marginRight:"5%"}}
+                onClick={handleAddItem}
+                >
+                    Add More Items  
+                </button>
+                :null
+            }
         </div>
+                
         <div className="row" >
           <div className='col-md-7 ml-4 mt-4'>
             { 
@@ -153,8 +170,16 @@ const ViewProducts = () =>{
             </div>
             :null
           }
-          {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}      
         </div>
+          {errorMessage ? 
+            <div class= "empty-box">
+              <h3>{errorMessage}
+                <button className="btn btn-warning ml-3" onClick={handleAddItem}>
+                Add Items
+              </button>
+              </h3>
+            </div>
+          : null}
       </div>
     {/* <Footer/>   */}
   </React.Fragment>

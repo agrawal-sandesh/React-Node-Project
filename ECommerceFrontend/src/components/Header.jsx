@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReceipt, faSearch, faShoppingCart, faSignOutAlt, faUser} from '@fortawesome/free-solid-svg-icons';
 import '.././index.css';
-import ViewProducts from "../pages/ViewProducts";
 
-const Header = () =>{
+const Header = (props) =>{
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(['PMartSecrete']);
-    const [searchItem,setSearchItem]=useState('');
 
     const name = cookies ? (cookies.Token ? cookies.Token.name : '') : '';
     if(name.split(' ').length>1){
@@ -22,19 +20,27 @@ const Header = () =>{
     return(
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-custom-2" >
-          <Link className="navbar-brand font-styling" to="/">PMart</Link>
+          <Link className="navbar-brand font-styling" to="/">
+          PMart
+          </Link>
           <div className="d-flex justify-content-center" style={{flex: 1}}>
+          {
+            props.searchFunc ?
             <div className="search-bar pr-3">
               <input className="search-bar-input" 
               type="text" 
-              placeholder="Search for products, brands and more"
+              placeholder="Search for categories, products and items"
               onChange={(event)=>{
-                setSearchItem(event.target.value);
+                if(props.searchFunc){
+                props.searchFunc(event.target.value)
+                }
               }}
               />
               <FontAwesomeIcon icon={faSearch} style={{color: '#430297'}}/>
             </div>            
-          </div>
+          :null
+          }
+          </div>  
           <ul className="nav navbar-nav" style={{marginRight:"8%"}}>
             <li className="nav-item active mr-5">
               <Link className="nav-link font-styling" to="/mycart"><FontAwesomeIcon

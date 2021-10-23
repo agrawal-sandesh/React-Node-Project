@@ -5,11 +5,13 @@ import { useCookies } from 'react-cookie';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+
 const ViewCategories = () =>{
   const history = useHistory();
   const [categoryData, setCategoryData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
+  const [searchItem,setSearchItem] = useState('');
 
   useEffect(()=>{
     if(!cookies.Token) history.push("/login");
@@ -33,9 +35,13 @@ const ViewCategories = () =>{
     history.push(`/products/${CategoryID}`)
   }
 
+  const searchBar=(event)=>{
+    setSearchItem(event);
+  }
+
   return (
     <React.Fragment>
-      <Header/>
+      <Header searchFunc={searchBar}/>
         <div class="container-fluid">
           <div className="display-4">
             Categories
@@ -43,7 +49,14 @@ const ViewCategories = () =>{
           <div className="row">
             {
               categoryData ? 
-                categoryData.map(category => 
+              categoryData.filter(category=>{
+                if(searchItem==""){
+                  return category
+                }
+                else if(category.category_name.toLowerCase().includes(searchItem.toLowerCase())){
+                  return category
+                }
+              }).map(category => 
                   <div className='col-md-11 mt-4' style={{marginLeft:"4%"}}>
                     <div className="h3 mb-3">
                       {category.category_name}

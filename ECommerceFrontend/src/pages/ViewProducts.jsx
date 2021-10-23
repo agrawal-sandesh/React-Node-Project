@@ -6,12 +6,13 @@ import Product from '../components/Product';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const ViewProducts = (props) =>{
+const ViewProducts = () =>{
   const history = useHistory();
   let { categoryId } = useParams();
   const [productData, setProductData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
+  const [searchItem,setSearchItem] = useState('');
 
   useEffect(()=>{
     if(!cookies.Token) history.push("/login");
@@ -33,10 +34,13 @@ const ViewProducts = (props) =>{
     history.push(`/productdetails/${productId}`)
   }
 
+  const searchBar=(event)=>{
+    setSearchItem(event);
+  }
 
   return (
   <React.Fragment className="container">
-    <Header/>
+    <Header searchFunc={searchBar} />
     <div className="container-fluid">
       <div className="display-4 ml-4">
           Products
@@ -44,10 +48,17 @@ const ViewProducts = (props) =>{
         <div className="row">
           { 
             productData?
-            productData.map(product => 
+            productData.filter(productData=>{
+              if(searchItem==""){
+                return productData
+              }
+              else if(productData.name.toLowerCase().includes(searchItem.toLowerCase())){
+                return productData
+              }
+            }).map(productData => 
               <Product 
-                key={product.product_id} 
-                product={product} 
+                key={productData.product_id} 
+                productData={productData} 
                 handleMoveToNext={handleMoveToNext}
               />
             ):

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
+import Image from '../login.png'
 
 const eye = <FontAwesomeIcon icon={faEye} />;
 const emailIcon=<FontAwesomeIcon icon={faEnvelope}/>;
@@ -71,17 +72,13 @@ const Login =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-4 offset-4 mt-4">        
-            <form 
-              style={{ 
-                border: "1px solid gray", 
-                padding: "10%", 
-                marginTop :"15%",
-                boxShadow:"5px 5px 10px gray", 
-                backgroundColor:"white"
-              }}
-            >
-              <h2 className="text-center">Welcome!</h2>
+          <div className="col-md-4 offset-4 mt-4">   
+            <div className="mt-4" 
+              style={{textAlign:"center",cursor:"pointer"}}>
+              <img style={{height:"25%",width:"25%"}} src={Image} alt='login Image'></img>
+            </div>     
+            <form style={{ padding: "10%"}}>
+              <h2 className="text-center">Login!</h2>
               <div className="form-group">
                 <div class="input-group">
                   <div class="input-group-addon">
@@ -89,7 +86,7 @@ const Login =()=>{
                   </div>
                   <input 
                     className="form-control" 
-                    onChange={validateEmail} 
+                    onChange={validateEmail}
                     value={email}
                     placeholder="Email Address"
                     id="input1" 
@@ -148,6 +145,11 @@ const Login =()=>{
           </div>
         </div>
       </div>
+      <footer class="footer">PMart | Ecommerce | Login page | Terms of useSecurity | PrivacyInfringement | 
+          <div className="footer-copyright text-center py-2 "> 
+            © 2021 Copyright
+          </div>
+      </footer>
     </React.Fragment>
   );
 }

@@ -33,34 +33,42 @@ const ViewOrder = () =>{
     })
   }
 
-  const handleMoveHome=()=>{
+  const handleAddOrders=()=>{
     history.push('/')
   }
+
 return (
   <React.Fragment>
       <Header/>
           <div className="container-fluid">
             <div className="display-4 ml-4">
-                Orders Details
+              Order Page
+              { 
+                orderDetails.length>0?
+                <button 
+                  className="btn btn-primary mt-4" 
+                  style={{float:"right",marginRight:"5%"}}
+                  onClick={handleAddOrders}
+                  >
+                      Shop More  
+                  </button>
+                  :null
+              }
             </div>
-            <button 
-                className="btn btn-light"
-                onClick={handleMoveHome}
-                style={{float:"right",marginRight:"5%"}}
-                >
-                    Shop More
-                </button>
             <div className="row" >
               <div className='col-md-10 mt-4 offset-1'>
-                 
-                    <input
-                        class="ordersearch"
-                        type="text" 
-                        placeholder="Search Your Orders Here.."
-                        onChange={(event)=>{
-                          setSearchItem(event.target.value);
-                        }}
-                        />
+                    {
+                      orderDetails.length>0?
+                        <input
+                            class="ordersearch"
+                            type="text" 
+                            placeholder="Search Your Orders Here.."
+                            onChange={(event)=>{
+                              setSearchItem(event.target.value);
+                            }}
+                            />
+                            :null
+                    }
                     { 
                       orderDetails ?
                         orderDetails.filter(orderDetails=>{
@@ -84,9 +92,12 @@ return (
                                     No of Item: {orderDetails.quantity}
                                 </div>
                                 </div>
-                                <div className='col-md-2'> 
+                                <div className='col-md-2'>
                                 <div>
-                                    ₹{orderDetails.total_amount}
+                                  Price : ₹{orderDetails.rate}
+                                </div><br/>
+                                <div>
+                                  Total : ₹{orderDetails.total_amount}
                                 </div>
                                 </div>
                                 <div className='col-md-3'>
@@ -98,12 +109,20 @@ return (
                           </div>
                     ):
                     null
-                } 
+                    } 
+                      {errorMessage ?
+                        <div class= "empty-box">
+                          <h3>{errorMessage}
+                            <button className="btn btn-primary ml-3" onClick={handleAddOrders}>
+                              Place Order
+                          </button>
+                          </h3>
+                        </div>
+                  : null}
               </div>      
             </div>
           </div>
           <div>
-            {errorMessage ? <h2 className="container" >{errorMessage}</h2>: null}
           </div> 
   </React.Fragment>
 )

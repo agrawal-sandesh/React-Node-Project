@@ -4,6 +4,8 @@ import axios from 'axios';
 import '../index.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope,faEye,faUser,faPhone,faLock,faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import Footer from '../components/Footer';
+import Image from '../signup.png'
 
 const userIcon = <FontAwesomeIcon icon={faUser} />;
 const emailIcon=<FontAwesomeIcon icon={faEnvelope}/>;
@@ -31,12 +33,12 @@ const SignUp =()=>{
 
   const validateName = (event)=>{
     setName(event.target.value);
-    setErrorMessageName(!(event.target.value.length > 1))
+    setErrorMessageName(!(event.target.value.length > 3))
   }
   
   const validateEmail = (event)=>{
     setEmail(event.target.value);
-    setErrorMessageEmail(!(event.target.value.includes('@')))
+    setErrorMessageEmail(!(event.target.value.includes('@')))  
   }
 
   const validateContact = (event)=>{
@@ -46,7 +48,7 @@ const SignUp =()=>{
 
   const validatePassword = (event)=>{
     setPassword(event.target.value);
-    setErrorMessagePassword(!(event.target.value.length > 5))
+    setErrorMessagePassword(!(event.target.value.length >=   6))
   }
 
   const validateAddress = (event)=>{
@@ -104,16 +106,16 @@ const SignUp =()=>{
     <React.Fragment>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-6 mt-4 offset-3">        
-            <form 
-              style={{ 
-                border: "1px solid gray  ", 
-                padding: "5%", 
-                boxShadow:"5px 5px 10px gray", 
-                marginTop:"5%",
-                backgroundColor:"white"
-              }}
-            >
+          <div className="col-md-6 offset-3 mt-4">
+            <div className="mt-4" 
+              style={{textAlign:"center",cursor:"pointer"}}>
+              <img style={{height:"20%",width:"20%"}} src={Image} alt='signup Image'></img>
+            </div>        
+            <form style={{
+               paddingLeft: "13%",
+               paddingRight: "13%",
+               paddingBottom:"3%"
+               }}>
               <h3 className="text-black text-center mb-4">Looks, Like you are new Here!!</h3>
               <div className="form-group">
                 <div class="input-group">
@@ -131,8 +133,9 @@ const SignUp =()=>{
               </div>
               {
                 errorMessageName ? 
-                <><span className="text-danger">Enter Full Name</span><br/></>:
-                null
+                <><span className="text-danger">Enter Full Name</span><br/></>
+                
+                :null
               }
               <div className="form-group">
                 <div class="input-group">
@@ -150,7 +153,7 @@ const SignUp =()=>{
               </div>
               {
                 errorMessageEmail ? 
-                <><span className="text-danger">Email Should contain @</span><br/></>:
+                <><span className="text-danger">Email Should be valid</span><br/></>:
                 null
               }
               <div className="form-row">
@@ -245,6 +248,7 @@ const SignUp =()=>{
           </div>
         </div>
       </div>
+      <Footer/>
     </React.Fragment>
   );
 }
