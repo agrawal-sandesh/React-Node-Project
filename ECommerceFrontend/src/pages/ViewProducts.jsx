@@ -6,7 +6,7 @@ import Product from '../components/Product';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const ViewProducts = () =>{
+const ViewProducts = (props) =>{
   const history = useHistory();
   let { categoryId } = useParams();
   const [productData, setProductData] = useState([]);
@@ -32,6 +32,7 @@ const ViewProducts = () =>{
   const handleMoveToNext = (productId) =>{
     history.push(`/productdetails/${productId}`)
   }
+
 
   return (
   <React.Fragment className="container">

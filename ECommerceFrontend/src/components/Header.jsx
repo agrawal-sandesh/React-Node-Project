@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReceipt, faSearch, faShoppingCart, faSignOutAlt, faUser} from '@fortawesome/free-solid-svg-icons';
 import '.././index.css';
+import ViewProducts from "../pages/ViewProducts";
 
 const Header = () =>{
     const history = useHistory();
     const [cookies, setCookie, removeCookie] = useCookies(['PMartSecrete']);
+    const [searchItem,setSearchItem]=useState('');
 
     const name = cookies ? (cookies.Token ? cookies.Token.name : '') : '';
     if(name.split(' ').length>1){
@@ -18,6 +20,7 @@ const Header = () =>{
     var firstName = name 
     }
     return(
+    <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-custom-2" >
           <Link className="navbar-brand font-styling" to="/">PMart</Link>
           <div className="d-flex justify-content-center" style={{flex: 1}}>
@@ -25,6 +28,9 @@ const Header = () =>{
               <input className="search-bar-input" 
               type="text" 
               placeholder="Search for products, brands and more"
+              onChange={(event)=>{
+                setSearchItem(event.target.value);
+              }}
               />
               <FontAwesomeIcon icon={faSearch} style={{color: '#430297'}}/>
             </div>            
@@ -61,7 +67,8 @@ const Header = () =>{
               </div>
             </li>
           </ul>
-      </nav>
+      </nav>  
+    </React.Fragment>
     )
   }
 
