@@ -52,7 +52,7 @@ const ViewCheckout = () =>{
 
   const getAddressData=()=>{
     axios.post('http://localhost:4000/address',{
-      customerId:cookies.Token.customer_id
+      customerId: cookies ? (cookies.Token? cookies.Token.customer_id : '') : ''
     })
     .then(response => {
       if(response.data.status === 'success'){

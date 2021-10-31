@@ -19,7 +19,9 @@ const ViewCategories = () =>{
   },[])
 
   const Categories=()=>{
-    axios.get('http://localhost:4000/categories')
+    axios.get('http://localhost:4000/categories',{
+    headers: {'authorization': cookies.Token.jwtToken}
+  })
     .then(response => {
       if(response.data.status === 'success')
         setCategoryData(response.data.res);

@@ -3,6 +3,8 @@ const routing = express.Router();
 const db = require('../../dbConnection.js');
 const Razorpay = require("razorpay");
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const SECRET = '123456789892983u2djhfsghfrg'
 
 routing.post("/login", async(req, res) => {
     try {
@@ -14,6 +16,8 @@ routing.post("/login", async(req, res) => {
                     final_res = {}
                     final_res.customer_id = row[0].customer_id;
                     final_res.name = row[0].name;
+                    const token = jwt.sign(final_res, SECRET, { expiresIn: 60 * 60 });
+                    final_res.jwtToken = token;
                     res.send({ status: 'success', msg: 'Login Successfully', res: final_res })
                 } else {
                     res.send({ status: 'failed', msg: 'Authentication Failed' })
@@ -27,8 +31,27 @@ routing.post("/login", async(req, res) => {
     }
 })
 
+const auth = (req, res, next) => {
+    if (req && req.headers && req.headers.authorization) {
+        let token = req.headers.authorization
+        jwt.verify(token, SECRET, function(err, decoded) {
+            if (err) {
+                res.send({ status: 'failed', msg: err.message })
+            } else {
+                let currentUnixTime = Math.floor(new Date().getTime() / 1000);
+                if (currentUnixTime > decoded.exp) {
+                    res.send({ status: 'failed', msg: 'Token Expired' })
+                } else {
+                    next()
+                }
+            }
+        });
+    } else {
+        res.send({ status: 'failed', msg: 'Token Missing' })
+    }
+}
 
-routing.get("/categories", async(req, res) => {
+routing.get("/categories", auth, async(req, res) => {
     try {
         db.all(`SELECT ct.category_id, ct.name as category_name, pt.product_id, pt.name as product_name, pt.is_available, pt.image FROM category_table ct
         INNER JOIN product_table pt on ct.category_id = pt.category_id ORDER BY ct.category_id;`, (err, row) => {
@@ -154,7 +177,7 @@ routing.post("/addcart", async(req, res) => {
     }
 })
 
-routing.post("/mycart", async(req, res) => {
+routing.post("/mycart", auth, async(req, res) => {
     try {
         const { customerId } = req.body;
         if (customerId) {

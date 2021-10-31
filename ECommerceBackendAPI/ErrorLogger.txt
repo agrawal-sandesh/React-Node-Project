@@ -9,3 +9,49 @@ Tue Aug 31 2021 - ReferenceError: db is not defined
     at next (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:275:10)
     at Function.handle (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:174:3)
     at router (D:\GitHub\Full-stack\ECommerceProjectAPI\node_modules\express\lib\router\index.js:47:12)
+Sun Oct 31 2021 - TypeError: Date.time is not a function
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\routes\routing.js:38:40
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:223:12
+    at getSecret (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:94:10)
+    at mdl (D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\routes\routing.js:37:13)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:335:12)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:174:3)
+    at router (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:317:13)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:284:7
+    at Function.process_params (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:335:12)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:275:10)
+    at requestLogger (D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\utilities\requestlogger.js:9:5)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:317:13)
+Sun Oct 31 2021 - TypeError: Date.time is not a constructor
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\routes\routing.js:38:35
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:223:12
+    at getSecret (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:90:14)
+    at Object.module.exports [as verify] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\jsonwebtoken\verify.js:94:10)
+    at mdl (D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\routes\routing.js:37:13)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:335:12)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:174:3)
+    at router (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:317:13)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:284:7
+    at Function.process_params (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:335:12)
+    at next (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:275:10)
+    at requestLogger (D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\utilities\requestlogger.js:9:5)
+    at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:317:13)

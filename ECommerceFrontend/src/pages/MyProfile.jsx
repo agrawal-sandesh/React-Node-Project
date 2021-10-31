@@ -12,6 +12,7 @@ const MyProfile = () =>{
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['PMartSecrete']);
   const [customerData, setCustomerData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState([]);
 
     useEffect(()=>{
         if(!cookies.Token) history.push("/login");
@@ -26,7 +27,7 @@ const MyProfile = () =>{
             if(response.data.status === 'success'){
                 setCustomerData(response.data.res[0])
             }else{
-                alert('Details not found')
+                setErrorMessage('Details not found')
             }
             })
             .catch(function (error) {
@@ -99,6 +100,11 @@ const MyProfile = () =>{
             </form>
             </div>
         </div>
+        {
+          errorMessage?
+          <h3>{errorMessage}</h3>
+        :null
+        }
       </div>
     </React.Fragment>
   );
