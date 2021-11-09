@@ -15,13 +15,13 @@ const ViewCategories = () =>{
 
   useEffect(()=>{
     if(!cookies.Token) history.push("/login");
-      Categories();
+    else Categories();
   },[])
 
   const Categories=()=>{
     axios.get('http://localhost:4000/categories',{
     headers: {'authorization': cookies.Token.jwtToken}
-  })
+  })    
     .then(response => {
       if(response.data.status === 'success')
         setCategoryData(response.data.res);

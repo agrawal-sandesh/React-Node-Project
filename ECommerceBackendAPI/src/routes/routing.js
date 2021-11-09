@@ -177,7 +177,7 @@ routing.post("/addcart", async(req, res) => {
     }
 })
 
-routing.post("/mycart", auth, async(req, res) => {
+routing.post("/mycart", async(req, res) => {
     try {
         const { customerId } = req.body;
         if (customerId) {
