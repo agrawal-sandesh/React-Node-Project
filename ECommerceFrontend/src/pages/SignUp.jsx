@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import '../index.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope,faEye,faUser,faPhone,faLock,faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope,faEye,faUser,faPhone,faLock,faAddressBook, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Footer from '../components/Footer';
 import Image from '../signup.png'
 
@@ -13,6 +13,7 @@ const contactIcon = <FontAwesomeIcon icon={faPhone} />;
 const passwordIcon=<FontAwesomeIcon icon={faLock}/>;
 const addressIcon=<FontAwesomeIcon icon={faAddressBook}/>;
 const eye = <FontAwesomeIcon icon={faEye} />;
+const eyeSlashIcon=<FontAwesomeIcon icon={faEyeSlash}/>
 
 
 const SignUp =()=>{
@@ -185,8 +186,12 @@ const SignUp =()=>{
                         id="input1"
                       />
                     <div class="input-group-addon">
+                      { passwordShown ?
+                        <i onClick={togglePasswordVisiblity}>{eyeSlashIcon}</i>
+                        :
                         <i onClick={togglePasswordVisiblity}>{eye}</i>
-                    </div>
+                      }
+                    </div> 
                   </div>
                 </div>
               </div>

@@ -515,7 +515,7 @@ routing.post("/orderitems", async(req, res) => {
     try {
         const { customerId } = req.body;
         if (customerId) {
-            db.all(`SELECT pt.name,pt.details,pt.image, ot.delivery_status, opt.quantity,opt.rate, opt.total_amount FROM order_table ot
+            db.all(`SELECT pt.name,pt.details,pt.image,ot.delivery_status, opt.quantity,opt.rate, opt.total_amount FROM order_table ot
             INNER JOIN order_product_table opt on ot.order_id = opt.order_id
             INNER JOIN product_table pt ON pt.product_id = opt.product_id 
             WHERE ot.customer_id ='${customerId}'`, (err, row) => {
@@ -536,4 +536,33 @@ routing.post("/orderitems", async(req, res) => {
     }
 })
 
+routing.post("/pushdata", (req, res) => {
+    try {
+        const name = req.body.title;
+        const details = req.body.description;
+        const rate = req.body.price;
+        const image = req.body.image;
+        const category_id = req.body.category;
+        console.log(name)
+        if (name && details && rate && image) {
+            db.all(`INSERT INTO product_table (name, details, rate, is_available, category_id, image)
+             VALUES('${name}', '${details}', '${rate}','1','${category_id}','${image}')`, (err) => {
+                if (err) {
+                    res.send({ status: 'failed', msg: err.message })
+                }
+                if (!err) {
+                    res.send({ status: 'success', msg: "data pushed" })
+                } else {
+                    res.send({ status: 'failed', msg: "unable to push data" })
+                }
+            })
+        } else {
+            res.send({ status: 'failed', msg: 'can not read json data' })
+        }
+    } catch (err) {
+        res.send({ status: 'failed', msg: 'Something went wrong' })
+    }
+})
+
+module.exports = routing;
 module.exports = routing;

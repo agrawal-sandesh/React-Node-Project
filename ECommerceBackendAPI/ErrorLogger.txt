@@ -55,3 +55,33 @@ Sun Oct 31 2021 - TypeError: Date.time is not a constructor
     at requestLogger (D:\GitHub\React-Node-Project\ECommerceBackendAPI\src\utilities\requestlogger.js:9:5)
     at Layer.handle [as handle_request] (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\layer.js:95:5)
     at trim_prefix (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\express\lib\router\index.js:317:13)
+Sat Nov 27 2021 - SyntaxError: Unexpected token , in JSON at position 478
+    at JSON.parse (<anonymous>)
+    at parse (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\types\json.js:89:19)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\read.js:121:18
+    at invokeCallback (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:224:16)
+    at done (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:213:7)
+    at IncomingMessage.onEnd (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:273:7)
+    at IncomingMessage.emit (node:events:402:35)
+    at endReadableNT (node:internal/streams/readable:1343:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+Sat Nov 27 2021 - SyntaxError: Unexpected token , in JSON at position 474
+    at JSON.parse (<anonymous>)
+    at parse (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\types\json.js:89:19)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\read.js:121:18
+    at invokeCallback (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:224:16)
+    at done (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:213:7)
+    at IncomingMessage.onEnd (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:273:7)
+    at IncomingMessage.emit (node:events:402:35)
+    at endReadableNT (node:internal/streams/readable:1343:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+Sat Nov 27 2021 - SyntaxError: Unexpected token , in JSON at position 474
+    at JSON.parse (<anonymous>)
+    at parse (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\types\json.js:89:19)
+    at D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\body-parser\lib\read.js:121:18
+    at invokeCallback (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:224:16)
+    at done (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:213:7)
+    at IncomingMessage.onEnd (D:\GitHub\React-Node-Project\ECommerceBackendAPI\node_modules\raw-body\index.js:273:7)
+    at IncomingMessage.emit (node:events:402:35)
+    at endReadableNT (node:internal/streams/readable:1343:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)

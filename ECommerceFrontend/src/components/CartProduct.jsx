@@ -10,7 +10,7 @@ return (
         </div>
 
         <div className='col-md-3 mt-3'>
-          <div class='font'>
+          <div>
             {props.cartProduct.name}
           </div>
           <div className="mt-5"> 

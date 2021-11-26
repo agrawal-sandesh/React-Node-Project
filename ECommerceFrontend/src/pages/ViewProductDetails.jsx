@@ -82,16 +82,18 @@ const ViewProductDetails = () =>{
           <div className='col-md-4 mt-4' style={{marginLeft:"5%"}}>
               <div className="card">
                 <div className='card-body'> 
-                  <img className="card-img-top" src={productDetails.image} alt="Card image" />
+                  <img className="card-img-top"
+                   style={{width:'100%',height:'400px'}}
+                   src={productDetails.image} alt="Card image" />
                 </div>
               </div>  
           </div>
           <div className='col-md-7 mt-4'>
-              <div class="card">
-                <div className='card-header'>
-                  <h4 className="text-center" style={{cursor:"pointer"}}>{productDetails.name} </h4> 
-                  <h4 style={{cursor:"pointer"}}>Price: ₹{productDetails.rate} </h4> 
-                  <i style={{cursor:"pointer"}}>Details: {productDetails.details}</i><br/>
+              <div class="card" style={{border:'0px'}}>
+                <div className='card-header' style={{backgroundColor:'white'}}>
+                  <h4 className="text-center" style={{cursor:"pointer"}}>{productDetails.name} </h4><br/>
+                  <h4 style={{cursor:"pointer"}}>Price: ₹{productDetails.rate} </h4> <br/>
+                  <p style={{cursor:"pointer"}}>Details: {productDetails.details}</p><br/>
                 </div>
                 <div className='card-body'>
                   {

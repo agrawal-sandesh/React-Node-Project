@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../index.css';
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import Image from '../login.png'
@@ -12,6 +12,7 @@ import Image from '../login.png'
 const eye = <FontAwesomeIcon icon={faEye} />;
 const emailIcon=<FontAwesomeIcon icon={faEnvelope}/>;
 const lockIcon=<FontAwesomeIcon icon={faLock}/>
+const eyeSlashIcon=<FontAwesomeIcon icon={faEyeSlash}/>
 
 const Login =()=>{
   const history = useHistory();
@@ -114,7 +115,11 @@ const Login =()=>{
                     id="input1"
                   />
                   <div class="input-group-addon">
+                    { passwordShown?
+                      <i onClick={togglePasswordVisiblity}>{eyeSlashIcon}</i>
+                      :
                       <i onClick={togglePasswordVisiblity}>{eye}</i>
+                    }
                   </div>
                 </div>
               </div>

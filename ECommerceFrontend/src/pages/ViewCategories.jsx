@@ -70,17 +70,19 @@ const ViewCategories = () =>{
                       style={{borderRadius:"8px", padding:"2%", backgroundColor:"whitesmoke"}}>
                         {category.products.slice(0,4).map(product =>
                           <div class="col-md-3">
-                              <div className="card" style={{cursor:"pointer"}}
+                              <div className="card" style={{cursor:"pointer",width:'100%',height:'350px'}}
                                 onClick={()=> handleMoveNext(category.category_id)}
                               >
-                                <div className='card-header bg-gradient-light'> 
-                                  <img className="card-img-top" class="image-box" src={product.product_img} alt="Image" />
+                                <div className='card-header' style={{backgroundColor:'white'}}> 
+                                  <img className="card-img-top" class="image-box"
+                                   style={{width:'100%', height:'200px'}}
+                                  src={product.product_img} alt="Image" />
                                 </div>
                                 <div className='card-body'>
                                   <div className="card-text">
-                                    <h5 className="card-title" className="text-center" >
+                                    <p className="card-title" className="text-center" >
                                       {product.product_name}
-                                    </h5> 
+                                    </p> 
                                     <div className="text-center text-muted"> Shop Now! </div>
                                   </div>
                                 </div>
