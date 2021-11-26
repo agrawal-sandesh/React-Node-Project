@@ -63,11 +63,10 @@ const ViewCategories = () =>{
                     <div className="h3 mb-3">
                       {category.category_name}
                       <div id="link" style={{float:"right"}} onClick={()=> handleMoveNext(category.category_id)}>
-                        More Items..
+                        more items...
                       </div>
                     </div>
-                      <div class="row mb-3" 
-                      style={{borderRadius:"8px", padding:"2%", backgroundColor:"whitesmoke"}}>
+                      <div class="row mb-3">
                         {category.products.slice(0,4).map(product =>
                           <div class="col-md-3">
                               <div className="card" style={{cursor:"pointer",width:'100%',height:'350px'}}

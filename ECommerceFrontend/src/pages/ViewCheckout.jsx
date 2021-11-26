@@ -198,7 +198,7 @@ const handleRemoveAddress=(addressId)=>{
       <Header/>
       <div className="container-fluid">
         <div className="display-4 ml-4">
-            Checkout Page
+            Checkout
         </div>
         <div className="row" >
           <div className='col-md-7 ml-4 mt-4'>
